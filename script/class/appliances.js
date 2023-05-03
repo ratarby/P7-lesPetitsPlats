@@ -1,4 +1,4 @@
-export class Appliances {
+class Appliances {
     constructor() {
         this.appliances = [];
         this.applianceSelected = [];
@@ -6,3 +6,4 @@ export class Appliances {
         this.applianceSelected.push(this.data.appliance);
     }
 }
+

@@ -1,6 +1,7 @@
-export class Recipes {
-    constructor(data) {
-        this.recipes = data.recipes
+class Recipes {
+    constructor() {
+        const data = recipes;
+        this.recipes = data;
         this.id = data.id;
         this.name = data.name;
         this.servings = data.servings;
@@ -12,10 +13,9 @@ export class Recipes {
         this.description = data.description;
         this.appliance = data.appliance;
         this.ustensils = data.ustensils;
-        this.tags = data.tags;
+        this.tags = data.recipes;
     }
     
 }
-    
 
 

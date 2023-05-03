@@ -1,4 +1,4 @@
-export class Ingredients {
+class Ingredients {
     constructor() {
         this.ingredients = [];
         this.ingredientSelected = [];
@@ -6,3 +6,4 @@ export class Ingredients {
         this.ingredientSelected.push(this.data.ingredient);
     }
 }
+

@@ -8,7 +8,6 @@
 }
 html {
 background-color: #000;
-color: rgb(255, 255, 255);
 }
 
 header {
@@ -87,10 +86,10 @@ header {
 /* DROPDOWN */
 
 #drop {
-    width: 550px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 550px;
     margin: 1% 7% 0 6.2%;
     position: absolute;
     z-index: 3;
@@ -104,7 +103,7 @@ header {
     color: white;
     font-size: 18px;
     font-weight: 500;
-    margin: 20px 0 0 10px;
+    margin: 20px 0 0 20px;
 }
 
 .drop-menu__Closed input::placeholder {
@@ -126,6 +125,7 @@ header {
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
+    margin-left: .75rem;
 }
 .fa-chevron-down {
     font-size: 1rem;
@@ -272,7 +272,7 @@ header {
     opacity: 0.8;
 }
 
-/* #dropdowns {
+#dropdowns {
     position: relative;
     margin-left: 7%;
     margin-top: 0;
@@ -298,7 +298,7 @@ header {
     font-style: italic;
     color: rgba(255, 255, 255, 0.4);
     pointer-events: none;
-} */
+}
 
 /* TAGS */
 
@@ -354,7 +354,7 @@ header {
 
 /*MESSAGE RECHERCHE VIDE */
 
-#filtered-empty {
+.emptyFilter {
     display: none;
     align-items: center;
     justify-content: center;
@@ -426,7 +426,7 @@ main img {
     overflow: hidden;
 }
 
-.details-ing {
+.details-ingr {
     padding-right: 1px;
     display: flex;
     flex-direction: column;

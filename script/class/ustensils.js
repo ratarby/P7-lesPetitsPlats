@@ -1,4 +1,4 @@
-export class Ustensils {
+class Ustensils {
     constructor() {
         this.ustensils = [];
         this.ustensilSelected = [];
@@ -6,3 +6,4 @@ export class Ustensils {
         this.ustensilSelected.push(this.data.ustensil);
     }
 }
+console.log(Ustensils);
