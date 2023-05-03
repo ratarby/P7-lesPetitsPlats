@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Les petits plats, site de recettes de cuisine."
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="#" />
+    <link rel="icon" type="image/ico" href="/assets/icons/favicon.ico">
+
+
+
+    <title>Les Petits Plats</title>
+</head>
+
+<body>
+    <!-- container -->
+    <div class="container">
+        <!-- header -->
+        <header>
+            <!-- link -->
+            <a href="/index.html">
+                <!-- logo -->
+                <img class="logo" id="logo" src="/assets/img/logo.svg" alt="logo, Les Petits Plats" />
+            </a>
+        </header>
+        <!-- End of header -->
+
+        <!-- searchBar -->
+        <div class="search">
+            <div class="search-recipes">
+                <input 
+                    class="search-all-recipes" 
+                    id="search-all-recipes" 
+                    type="search"
+                    placeholder="Rechercher une recette, un ingrédient, un appareil, un ustensile "
+                    autocomplete="off" />
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+        <!-- End of searchBar -->
+
+        <!-- display selected tags -->
+        <div class="tags">
+            <div class="tags__ingr"></div>
+            <div class="tags__appar"></div>
+            <div class="tags__uste"></div>
+        </div>
+        <!-- End of display selected tags -->
+
+        <!-- dropDowns -->
+        <div id="absolute">
+
+            <!-- dropDowns -->
+            <div class="dropdowns">
+
+                <!-- dropdown search -->
+                <div class="dropdown-search">
+
+                    <!-- drop -->
+                    <div id="drop">
+
+                        <!-- dropdown ingredients -->
+                        <div class="dropdown-ingredients">
+
+                            <!-- dropdown ingredients arrow down-->
+                            <div id="drop-ingr__Closed" class="drop-menu__Closed">
+                                <input 
+                                    type="text"
+                                    class="drop-ingr drop-menu__input" 
+                                    id="ingredients" 
+                                    placeholder="Ingrédients" 
+                                    value="Ingrédients"
+                                    autocomplete="off"
+                                />
+                                <i class="fas fa-chevron-down" id="ingr-down"></i>
+                            </div>
+                            <!-- End of dropdown ingredients arrow down-->
+
+                            <!-- dropdown ingredients arrow up-->
+                            <div id="drop-ingr__Open" class="drop-all__Open drop-menu__Open">
+                                <div class="search-drop_all search-ingr_all">
+                                    <input 
+                                        type="text"
+                                        class="drop-ingr drop-menu__input" 
+                                        id="ingredients" 
+                                        placeholder="Ingrédients" 
+                                        value="Ingrédients"
+                                        autocomplete="off"
+                                    />
+                                    <i class="fas fa-chevron-up" id="ingr-up"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- End of dropdown ingredients -->
+                        
+                        <!-- ---------------------------------------------------- -->
+                        
+                        <!-- dropdown appareils -->
+                        <div class="dropdown-appareils">
+                            <!-- dropdown appareil arrow down-->
+                            <div id="drop-appar__Closed" class="drop-menu__Closed">
+                                <input 
+                                    type="text"
+                                    class="drop-appar drop-menu__input" 
+                                    id="appareils" 
+                                    placeholder="Appareils" 
+                                    value="Appareils"
+                                    autocomplete="off"
+                                />
+                                <i class="fas fa-chevron-down" id="appar-down"></i>
+                            </div>
+                            <!-- End of dropdown ingredients arrow down-->
+
+                            <!-- dropdown appareils arrow up-->
+                            <div id="drop-appar__Open" class="drop-all__Open drop-menu__Open">
+                                <div class="search-drop_all search-appar_all">
+                                    <input 
+                                        type="text"
+                                        class="drop-appar drop-menu__input" 
+                                        id="appareils" 
+                                        placeholder="Appareils" 
+                                        value="Appareils"
+                                        autocomplete="off"
+                                    />
+                                    <i class="fas fa-chevron-up" id="appar-up" ></i>
+                                </div>
+                            </div>
+                            <!-- End of dropdown appareils arrow up-->
+
+                        </div>
+                        <!-- End of dropdown appareils -->
+
+                        <!-- ---------------------------------------------------- -->
+                        
+                        <!-- dropdown ustensiles -->
+                        <div class="dropdown-ustensiles">
+
+                            <!-- dropdown ustensiles arrow down-->
+                            <div id="drop-uste__Closed" class="drop-menu__Closed">
+                                <input 
+                                    type="text"
+                                    class="drop-uste drop-menu__input" 
+                                    id="ustensiles" 
+                                    placeholder="Ustensiles" 
+                                    value="Ustensiles"
+                                    autocomplete="off"
+                                />
+                                <i class="fas fa-chevron-down" id="uste-down"></i>
+                            </div>
+                            <!-- End of dropdown ustensiles arrow down-->
+
+                            <!-- dropdown ustensiles arrow up-->
+                            <div id="drop-uste__Open" class="drop-all__Open drop-menu__Open">
+                                <div class="search-drop_all search-uste_all">
+                                    <input 
+                                        type="text"
+                                        class="drop-uste drop-menu__input" 
+                                        id="ustensiles" 
+                                        placeholder="Ustensiles" 
+                                        value="Ustensiles"
+                                        autocomplete="off"
+                                    />
+                                    <i class="fas fa-chevron-up" id="uste-up"></i>
+                                </div>
+                            </div>
+
+                            <!-- End of dropdown ustensiles arrow up-->
+
+                        </div>
+                        <!-- End of dropdown ustensiles -->
+
+                    </div>
+                    <!-- End of drop -->
+
+                </div>
+                <!-- End of dropdown search -->
+                
+            </div>
+            <!-- End of dropDowns -->
+            
+            <!-- emptyFilter -->
+            <div class="emptyFilter">
+                <img id="error-img" src="/assets/img/logo.svg" alt="logo, Les Petits Plats"> 
+                <p>
+                    «Il n'y a pas de recettes correspondant à votre critère de recherche... <br>
+                    Vous pouvez rechercher par "mot-clé" comme :<br> "Poulet" ou "Tarte", etc...»
+                </p>
+            </div>
+            <!-- End of Empty card -->
+
+            <!-- main content -->
+            <main class="recipes"></main>
+            <!-- End of main content -->
+        </div>
+        <!-- End of absolute -->
+
+        <!-- javascript -->
+        <script src="/script/class/ustensils.js"></script>
+        <script src="/script/class/appliances.js"></script>
+        <script src="/script/class/ingredients.js"></script>
+
+        <script src="/script/class/list.js"></script>
+        <script src="/script/class/recipes.js"></script>
+
+        <script src="/utils/drops.js"></script>
+        <script src="/script/data/recipes.js"></script>
+        
+        <script type="module" src="/script/Page/index.js"></script>
+        <script src="https://kit.fontawesome.com/1b66eac319.js" crossorigin="anonymous"></script>
+    </div>
+</body>
+
+</html>
