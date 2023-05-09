@@ -5,7 +5,9 @@ console.log(recipes);
 
 // define an instance
 const list = new List();
-list.displayUserCard();
+list.displayRecipesCard();
+
+
 
 
 

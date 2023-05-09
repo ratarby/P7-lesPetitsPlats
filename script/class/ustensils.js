@@ -1,9 +1,13 @@
 class Ustensils {
     constructor() {
-        this.ustensils = [];
-        this.ustensilSelected = [];
-        this.ustensils.push(this.data.ustensils);
-        this.ustensilSelected.push(this.data.ustensil);
+        const dataUstensils = recipes;
+        // console.log(dataUstensils);
+        this.dataUste = dataUstensils;
+        // console.log(this.dataUste);
+
+        for (let i = 0; i < dataUstensils.length; i++) {
+            dataUstensils[i].ustensils = dataUstensils[i].ustensils;
+            // console.log(dataUstensils[i].ustensils);
+        }
     }
 }
-console.log(Ustensils);
