@@ -11,19 +11,20 @@ background-color: #000;
 }
 
 header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 1.250rem;
 }
 
 a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 18.7%;
+    width: 18.5%;
     text-decoration: none;
 }
 .container {
     max-width: 1440px;
-    margin: auto;
+    margin: 2% 10%;
+
 }
 
 #absolute {
@@ -36,6 +37,8 @@ a {
 #absolute ::-webkit-scrollbar {
     display: none;
 }
+
+
 
 #logo {
     display: flex;
@@ -51,7 +54,7 @@ a {
     width: 100%;
 }
 
-.search-all-recipes {
+.search-all-recipes  {
     width: 100%;
     height: 69px;
     font-size: 18px;
@@ -68,7 +71,7 @@ a {
     position: relative;
 }
 
-.search-recipes input:focus {
+.search-recipes  input:focus {
     opacity: 100%;
     outline: none;
 }
@@ -168,11 +171,12 @@ a {
 #drop-ingr__Open,
 #drop-appar__Open,
 #drop-uste__Open {
+    margin-left: .82rem;
     padding-left: 1rem;
     overflow: scroll;
 }
 
-.drop-ingr {
+.drop-ingr { 
     margin-right: 0.5rem;
 }
 
@@ -194,7 +198,9 @@ a {
     overflow: hidden;
 }
 
-
+.drop-menu__input {
+    width: 600px;
+}
 .tags__ingr,
 .tags__appar,
 .tags__uste {
@@ -204,12 +210,13 @@ a {
 #drop-ingr__Open,
 #drop-appar__Open,
 #drop-uste__Open {
-    display: none;
+    display: block;
 }
 
 #drop-ingr__Open {
     border-bottom: solid 1rem #3282f7;
     border-radius: 5px;
+    width: 667px;
 }
 
 #drop-appar__Open {
@@ -232,7 +239,7 @@ a {
 
 .search-ingr_all,
 .search-ingr_all input {
-    height: 22px;
+    height: 27px;
     background-color: #3282f7;
     border: none;
     padding: 0.5rem 0.2rem;
@@ -243,7 +250,7 @@ a {
 
 .search-appar_all,
 .search-appar_all input {
-    height: 22px;
+    height: 27px;
     background-color: #68d9a4;
     border: none;
     padding: 0.5rem 0.2rem;
@@ -253,7 +260,7 @@ a {
 
 .search-uste_all,
 .search-uste_all input {
-    height: 22px;
+    height: 27px;
     background-color: #ed6454;
     border: none;
     padding: 0.5rem 0.2rem;
@@ -291,6 +298,10 @@ a {
     bottom: 4.4rem;
 }
 
+
+
+/* TAGS */
+
 .ingr-tags,
 .appar-tags,
 .uste-tags {
@@ -307,7 +318,7 @@ a {
     pointer-events: none;
 }
 
-/* TAGS */
+
 
 .tags {
     margin: 1rem 1rem 1rem 7%;
@@ -362,14 +373,14 @@ a {
 
 /*MESSAGE RECHERCHE VIDE */
 
-.emptyFilter {
+.errorFilter {
     display: none;
     align-items: center;
     justify-content: center;
     align-content: center;
     color: #bab6b6;
     font-style: italic;
-    font-size: 2rem;
+    font-size: 1.5rem;
     width: 50%;
     margin: auto;
     padding: 2rem;
@@ -380,27 +391,30 @@ a {
 }
 
 #error-img {
-    width: 25%;
-    padding: 1.5rem;
+    display: flex;
+    width: 40%;
+    margin: 2% auto;
 }
 
 /* CARTES RECETTES */
 
 main {
+    position: absolute;
     max-width: 1440px;
     margin-top: 12vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    position: absolute;
+    align-items: center;
     z-index: 2;
     top: 0;
 }
 
 article {
-    max-width: 23.75rem;
-    margin: 2rem 0;
-    
+    max-width: 22rem;
+    width: 23.75rem;
+    height: 22.75rem;
+    margin: 1rem 0.5rem;
 }
 
 main img {
@@ -439,7 +453,7 @@ main img {
     display: flex;
     flex-direction: column;
     font-family: "lato", sans-serif;
-    font-size: 12px;
+    font-size: .75125rem;
     width: 171px;
     height: 105px;
     overflow: scroll;

@@ -9,11 +9,11 @@
         content="Les petits plats, site de recettes de cuisine."
     />
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
 
     <!-- favicon -->
     <link rel="shortcut icon" href="#" />
-    <link rel="icon" type="image/ico" href="/assets/icons/favicon.ico">
+    <link rel="icon" type="image/ico" href="assets/icons/favicon.ico">
 
 
 
@@ -26,9 +26,9 @@
         <!-- header -->
         <header>
             <!-- link -->
-            <a href="/index.html">
+            <a href="index.html">
                 <!-- logo -->
-                <img class="logo" id="logo" src="/assets/img/logo.svg" alt="logo, Les Petits Plats" />
+                <img class="logo" id="logo" src="assets/img/logo.svg" alt="logo, Les Petits Plats" />
             </a>
         </header>
         <!-- End of header -->
@@ -42,7 +42,7 @@
                     type="search"
                     placeholder="Rechercher une recette, un ingrédient, un appareil, un ustensile "
                     autocomplete="off" />
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search" id="search"></i>
             </div>
         </div>
         <!-- End of searchBar -->
@@ -75,7 +75,7 @@
                                 <input 
                                     type="text"
                                     class="drop-ingr drop-menu__input" 
-                                    id="ingredients" 
+                                    id="ingredients__Closed" 
                                     placeholder="Ingrédients" 
                                     value="Ingrédients"
                                     autocomplete="off"
@@ -91,8 +91,8 @@
                                         type="text"
                                         class="drop-ingr drop-menu__input" 
                                         id="ingredients" 
-                                        placeholder="Ingrédients" 
-                                        value="Ingrédients"
+                                        placeholder="Rechercher un ingrédient" 
+                                        value=""
                                         autocomplete="off"
                                     />
                                     <i class="fas fa-chevron-up" id="ingr-up"></i>
@@ -127,8 +127,8 @@
                                         type="text"
                                         class="drop-appar drop-menu__input" 
                                         id="appareils" 
-                                        placeholder="Appareils" 
-                                        value="Appareils"
+                                        placeholder="Rechercher un appareil" 
+                                        value=""
                                         autocomplete="off"
                                     />
                                     <i class="fas fa-chevron-up" id="appar-up" ></i>
@@ -165,8 +165,8 @@
                                         type="text"
                                         class="drop-uste drop-menu__input" 
                                         id="ustensiles" 
-                                        placeholder="Ustensiles" 
-                                        value="Ustensiles"
+                                        placeholder="Rechercher un ustensile" 
+                                        value=""
                                         autocomplete="off"
                                     />
                                     <i class="fas fa-chevron-up" id="uste-up"></i>
@@ -188,8 +188,8 @@
             <!-- End of dropDowns -->
             
             <!-- emptyFilter -->
-            <div class="emptyFilter">
-                <img id="error-img" src="/assets/img/logo.svg" alt="logo, Les Petits Plats"> 
+            <div class="errorFilter id="errorFilter">
+                <img id="error-img" src="assets/img/logo.svg" alt="logo, Les Petits Plats"> 
                 <p>
                     «Il n'y a pas de recettes correspondant à votre critère de recherche... <br>
                     Vous pouvez rechercher par "mot-clé" comme :<br> "Poulet" ou "Tarte", etc...»
@@ -204,13 +204,10 @@
         <!-- End of absolute -->
 
         <!-- javascript -->
-        <script src="script/class/ustensils.js"></script>
-        <script src="script/class/appliances.js"></script>
-        <script src="script/class/ingredients.js"></script>
 
-        <script src="script/class/list.js"></script>
-        <script src="script/class/recipes.js"></script>
 
+        
+       
         <script src="utils/drops.js"></script>
         <script src="script/data/recipes.js"></script>
         
