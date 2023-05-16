@@ -85,8 +85,8 @@
                             <!-- End of dropdown ingredients arrow down-->
 
                             <!-- dropdown ingredients arrow up-->
-                            <div id="drop-ingr__Open" class="drop-all__Open drop-menu__Open">
-                                <div class="search-drop_all search-ingr_all">
+                            <div id="drop-ingr__Open" class="drop-all__Open drop-menu__Open ">
+                                <div class="search-drop_all search-ingr_all ">
                                     <input 
                                         type="text"
                                         class="drop-ingr drop-menu__input" 
@@ -96,6 +96,7 @@
                                         autocomplete="off"
                                     />
                                     <i class="fas fa-chevron-up" id="ingr-up"></i>
+                                    <div class="drop-ingr__list "></div>
                                 </div>
                             </div>
 
@@ -132,6 +133,7 @@
                                         autocomplete="off"
                                     />
                                     <i class="fas fa-chevron-up" id="appar-up" ></i>
+                                    <div class="drop-appar__list "></div>
                                 </div>
                             </div>
                             <!-- End of dropdown appareils arrow up-->
@@ -159,7 +161,7 @@
                             <!-- End of dropdown ustensiles arrow down-->
 
                             <!-- dropdown ustensiles arrow up-->
-                            <div id="drop-uste__Open" class="drop-all__Open drop-menu__Open">
+                            <div id="drop-uste__Open" class="drop-all__Open drop-menu__Open ">
                                 <div class="search-drop_all search-uste_all">
                                     <input 
                                         type="text"
@@ -169,6 +171,7 @@
                                         value=""
                                         autocomplete="off"
                                     />
+                                    <div class="drop-uste__list "></div>
                                     <i class="fas fa-chevron-up" id="uste-up"></i>
                                 </div>
                             </div>
@@ -187,8 +190,8 @@
             </div>
             <!-- End of dropDowns -->
             
-            <!-- emptyFilter -->
-            <div class="errorFilter id="errorFilter">
+            <!-- errerFilter -->
+            <div class="errorFilter" id="errorFilter">
                 <img id="error-img" src="assets/img/logo.svg" alt="logo, Les Petits Plats"> 
                 <p>
                     «Il n'y a pas de recettes correspondant à votre critère de recherche... <br>
@@ -204,9 +207,6 @@
         <!-- End of absolute -->
 
         <!-- javascript -->
-
-
-        
        
         <script src="utils/drops.js"></script>
         <script src="script/data/recipes.js"></script>

@@ -5,6 +5,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    text-decoration: none;
 }
 html {
 background-color: #000;
@@ -14,16 +15,22 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1.250rem;
+
 }
 
 a {
-    width: 18.5%;
-    text-decoration: none;
+    width: 30%;
 }
+
+.linkIngr,
+.linkAppar,
+.linkUste {
+    color: #fff;
+}
+
 .container {
     max-width: 1440px;
-    margin: 2% 10%;
+    margin: 0 auto;
 
 }
 
@@ -42,7 +49,7 @@ a {
 
 #logo {
     display: flex;
-    margin: auto;
+    margin: 1rem auto;
     height: 93px;
     margin-bottom: 1rem;
     cursor:pointer;
@@ -171,7 +178,7 @@ a {
 #drop-ingr__Open,
 #drop-appar__Open,
 #drop-uste__Open {
-    margin-left: .82rem;
+    margin-left: .75rem;
     padding-left: 1rem;
     overflow: scroll;
 }
@@ -180,8 +187,10 @@ a {
     margin-right: 0.5rem;
 }
 
+
+
 .drop-appar {
-    margin-right: 0.5rem;
+    margin-right: 0.10rem;
     margin-left: 0.5rem;
 }
 
@@ -191,8 +200,7 @@ a {
 
 .drop-menu__Open {
     width: 667px;
-    min-height: 16px;
-    max-height: 397px;
+    height: 397px;
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
@@ -210,7 +218,21 @@ a {
 #drop-ingr__Open,
 #drop-appar__Open,
 #drop-uste__Open {
-    display: block;
+    display: none;
+}
+
+.drop-ingr__list,
+.drop-appar__list,
+.drop-uste__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 0 -1rem .1rem;
+    font-size: 1.125;
+    font-weight: 700;
+    font-family: "lato", sans-serif;
+    color:#fff;
+    
 }
 
 #drop-ingr__Open {
@@ -401,20 +423,24 @@ a {
 main {
     position: absolute;
     max-width: 1440px;
-    margin-top: 12vh;
+    margin: 7% auto;
+    width: 100%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     z-index: 2;
     top: 0;
+    gap: 1rem;
 }
 
 article {
     max-width: 22rem;
     width: 23.75rem;
     height: 22.75rem;
-    margin: 1rem 0.5rem;
+    /* margin: 1rem 0.5rem; */
+
 }
 
 main img {
