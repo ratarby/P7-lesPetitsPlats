@@ -5,48 +5,51 @@ console.log(recipes);
 displayRecipesCard('');
 
 
+
 function displayRecipesCard(searchValue) {
+    // Filter the recipes based on the search value
     let result;
 
-    result = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue)) ||
-        recipes.filter((x) => x.ingredients.toLowerCase().normalize("NFD").includes(searchValue)) ||
-        recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue)) || 
-        recipes.filter((x) => x.appliance.toLowerCase().normalize("NFD").includes(searchValue)) || 
-        recipes.filter((x) => x.quantity.toLowerCase().normalize("NFD").includes(searchValue)) || 
-        recipes.filter((x) => x.unit.toLowerCase().normalize("NFD").includes(searchValue));
+    result = recipes.filter((x) => x.name.toLowerCase().includes(searchValue)) || 
+    recipes.filter((x) => x.description.toLowerCase().includes(searchValue)) || 
+    recipes.filter((x) => x.appliance.toLowerCase().includes(searchValue)) ||
+    recipes.filter((x) => x.quantity.toLowerCase().normalize("NFD").includes(searchValue)) || 
+    recipes.filter((x) => x.unit.toLowerCase().normalize("NFD").includes(searchValue));
         // console.log(result);
 
+    // Display the filtered recipes as recipes in the 'recipes' element
+    document.getElementById('recipes').innerHTML = result.map(
+        (x) => `
+        <article class="article" id=${x.id} tabindex="0">
+            <div class="photo"><img src="/assets/img/logo.svg"/></div>
+            <div class="article-all">
+                <div class="title">
+                    <div class="title-txt">${x.name}</div>
+                    <div class="title-time"><i class="far fa-clock"></i> ${x.time}</div>
+                </div>
+                
+            <div class="details">
+                <div class="details-ingr">
+                ${x.ingredients.map((y) => `
+                <span>${y.ingredient ? y.ingredient : ""}    
+                    ${y.quantity ? " : " + y.quantity : ""} 
+                    ${y.unit ? y.unit : ""} 
+                </span>` ).join('')}
+                </div>
+            <div class="details-txt">${x.description}</div>
+        </div>
+        </div>
+</article>`
+).join('')
 
-            document.getElementById('recipes').innerHTML = result.map(
-              // Create HTML for each recipe
-                (x) => `<article class="article" id=${x.id} tabindex="0">
-                            <div class="photo"><img src="/assets/img/logo.svg"/></div>
-                            <div class="article-all">
-                            <div class="title">
-                                <div class="title-txt">${x.name}</div>
-                                <div class="title-time"><i class="far fa-clock"></i> ${x.time}</div>
-                            </div>
-                                <div class="details">
-                                    <div class="details-ingr">
-                                    ${x.ingredients.map((y) => `
-                                    <span>${y.ingredient ? y.ingredient : ""}    
-                                        ${y.quantity ? " : " + y.quantity : ""} 
-                                        ${y.unit ? y.unit : ""} 
-                                    </span>` ).join('')}
-                                    </div>
-                                <div class="details-txt">${x.description}</div>
-                            </div>
-                            </div>
-                    </article>`
-                ).join('')
-            
-            //display error msg if wrong search value    
-            if (document.getElementsByClassName('article').length > 0)  {
-                document.getElementById('errorFilter').style.display = "none";
-            } else {
-                document.getElementById('errorFilter').style.display = "block";
-            }
+    // Display an error message if no recipes were found
+    if (document.getElementsByClassName('article').length > 0)  {
+        document.getElementById('errorFilter').style.display = "none";
+    } else {
+        document.getElementById('errorFilter').style.display = "block";
+    }
 }
+
             
 document.getElementById('search').addEventListener('click', function() {
 const searchValue = document.getElementById("search-all-recipes").value;// valeur de la barre de recherche
@@ -80,14 +83,12 @@ function sortByIngredients() {
             }
             return prv; // return prv
         }, {key: {}, res: []}).res.sort(); // select array (res) and sort
-console.log(resultIngredients);
+// console.log(resultIngredients);
     // display list of ingredients on screen
-    document.querySelector('.drop-ingr__list').innerHTML = resultIngredients.map(
+    document.getElementById('drop-ingredients_open').innerHTML = resultIngredients.map(
         (x) => `
-                    <a href="/#">
-                        <div class=linkIngr>
+                    <a href="/#" class="linkIngr">
                             ${x}
-                        </div>
                     </a>
                 `
     ).join('');           
@@ -111,12 +112,10 @@ function sortByAppliance() {
     return prv;
     }, {key: {}, res: []}).res;
     // console.log(resultAppliance);
-    document.querySelector('.drop-appar__list').innerHTML = resultAppliance.map(
+    document.getElementById('drop-appareil_open').innerHTML = resultAppliance.map(
         (x) => `
-                    <a href="/#">
-                        <div class=linkAppar>
+                    <a href="/#" class="linkAppar">
                             ${x}
-                        </div>
                     </a>
                 `
     ).join('');           
@@ -143,12 +142,10 @@ function sortByUstensiles() {
                 }, {key: {}, res: []}).res;
     resultUstensiles.sort();         
     // console.log(resultUstensiles);
-    document.querySelector('.drop-uste__list').innerHTML = resultUstensiles.map(
+    document.getElementById('drop-ustensiles_open').innerHTML = resultUstensiles.map(
         (x) => `
-                    <a href="/#">
-                        <div class=linkUste>
+                    <a href="/#" class="linkUste">
                             ${x}
-                        </div>
                     </a>
                 `
     ).join('');           
