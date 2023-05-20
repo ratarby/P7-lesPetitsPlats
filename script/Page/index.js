@@ -87,7 +87,7 @@ function sortByIngredients() {
     // display list of ingredients on screen
     document.getElementById('drop-ingredients_open').innerHTML = resultIngredients.map(
         (x) => `
-                    <a href="/#" class="linkIngr">
+                    <a href="#" class="linkIngr">
                             ${x}
                     </a>
                 `
@@ -114,7 +114,7 @@ function sortByAppliance() {
     // console.log(resultAppliance);
     document.getElementById('drop-appareil_open').innerHTML = resultAppliance.map(
         (x) => `
-                    <a href="/#" class="linkAppar">
+                    <a href="#" class="linkAppar">
                             ${x}
                     </a>
                 `
@@ -144,7 +144,7 @@ function sortByUstensiles() {
     // console.log(resultUstensiles);
     document.getElementById('drop-ustensiles_open').innerHTML = resultUstensiles.map(
         (x) => `
-                    <a href="/#" class="linkUste">
+                    <a href="#" class="linkUste">
                             ${x}
                     </a>
                 `
