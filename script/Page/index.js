@@ -14,10 +14,10 @@ function displayRecipesCard(searchValue) {
     resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
     resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
     resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-    resultUstensiles =  recipes.filter((x) => x.ustensils.includes(searchValue.toLowerCase().normalize("NFD")));
-    resultDescription =  recipes.filter((x) => x.description.includes(searchValue.toLowerCase().normalize("NFD")));
+    resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));    
+    // resultDescription =  recipes.filter((x) => x.description.includes(searchValue.toLowerCase().normalize("NFD")));
 
-    result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensiles).concat(resultDescription);
+    result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils);
     // console.log(result);
 
     // Display the filtered recipes as recipes in the 'recipes' element
