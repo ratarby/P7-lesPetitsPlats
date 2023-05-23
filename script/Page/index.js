@@ -11,15 +11,15 @@ function displayRecipesCard(searchValue) {
     // Filter the recipes based on the search value
     let result;
 
+    resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+    resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+    resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
+    resultUstensiles =  recipes.filter((x) => x.ustensils.includes(searchValue.toLowerCase().normalize("NFD")));
+    resultDescription =  recipes.filter((x) => x.description.includes(searchValue.toLowerCase().normalize("NFD")));
 
-    result = recipes.filter((x) => x.name.includes(searchValue)) ||
-            recipes.filter(x => x.appliance.includes(searchValue)) ||
-            recipes.filter((x) => x.ingredients.toLocaleString().includes(searchValue)) ||
-            recipes.filter((x) => x.ustensils).includes(searchValue) ||
-            recipes.filter((x) => x.description).includes(searchValue);
-    console.log(result);
+    result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensiles).concat(resultDescription);
+    // console.log(result);
 
-    
     // Display the filtered recipes as recipes in the 'recipes' element
     document.getElementById('recipes').innerHTML = result.map(
         (x) => `
@@ -103,6 +103,10 @@ function sortByIngredients() {
 
 };
 
+document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
+    // console.log(e.target.dataset.name);
+    displayRecipesCard(e.target.dataset.name);
+})
 
 
 function sortByAppliance() {
@@ -128,11 +132,12 @@ function sortByAppliance() {
                 `
     ).join('');
 
-
-
 };
 
-
+document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
+    console.log(e.target.dataset.name);
+    displayRecipesCard(e.target.dataset.name);
+})
 
 function sortByUstensiles() {
     let resultUstensiles;
@@ -162,5 +167,10 @@ function sortByUstensiles() {
     ).join('');
 
 };
+
+document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
+    // console.log(e.target.dataset.name);
+    displayRecipesCard(e.target.dataset.name);
+})
 
 
