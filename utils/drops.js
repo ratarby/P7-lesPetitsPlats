@@ -4,6 +4,7 @@ let dropIngrBtn = document.getElementById("ingredients-down");//intégration sur
 let dropAppBtn = document.getElementById("appareil-down");
 let dropUstBtn = document.getElementById("ustensiles-down");
 
+
 let dropIngrBtnClos = document.getElementById("ingredients-up");//intégration sur la fléche pour qu'il y est propagation de l'action pour la fermeture
 let dropAppBtnClos = document.getElementById("appareil-up");
 let dropUstBtnClos = document.getElementById("ustensiles-up");
