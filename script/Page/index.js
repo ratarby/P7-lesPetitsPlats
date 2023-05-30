@@ -20,7 +20,7 @@ function displayRecipesCard(searchValue) {
     result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
     // console.log(result);
 
-    // Display the filtered recipes as recipes in the 'recipes' element
+    // Display  recipes by names, appliance, ustensils
     document.getElementById('recipes').innerHTML = result.map(
         (x) => `
         <article class="article" id="${x.id}" tabindex="0">
@@ -70,9 +70,31 @@ sortByIngredients(); // ok
 sortByAppliance(); // ok
 sortByUstensiles(); // ok
 
-// display recipes which are selected by ingredients and appliance and ustensils and
-// display  ingredients, appliance and ustensils  tags
-// displayIngredientTag();
+
+
+// search by ingredients list
+document.getElementById('search-drop_ing').addEventListener('keyup', function (e) {
+    sortByIngredients();
+})
+document.getElementById('search-drop_ing').addEventListener('change', function (e) {
+    sortByIngredients();
+})
+
+// search by appliance's list
+document.getElementById('search-drop_app').addEventListener('keyup', function (e) {
+    sortByAppliance();
+})
+document.getElementById('search-drop_app').addEventListener('change', function (e) {
+    sortByAppliance();
+})
+
+// search by ustensils list
+document.getElementById('search-drop_ust').addEventListener('keyup', function (e) {
+    sortByUstensiles();
+})
+document.getElementById('search-drop_ust').addEventListener('change', function (e) {
+    sortByUstensiles();
+})
 
 
 function sortByIngredients() {
@@ -81,18 +103,24 @@ function sortByIngredients() {
     // display list of ingredients in devtool
     // flatMap deletes nested arrays and returns an array
     resultIngredients = recipes.flatMap(x => x.ingredients.map(x => x.ingredient.toLowerCase().normalize("NFD"))).reduce(
-        function (prv, cur) {// delete redundancies
-
+        // delete redundancies with reduce method parmeter (prv, cur) 
+        // prv as an object value and cur as current value
+        function (prv, cur) { 
+            // console.log(prv,cur);
             let key = cur; // init key value
 
-            if (!prv.key[key]) { // if key does not exist
+            if (!prv.key[key]) { // if key{} and key[] does not exist
                 prv.key[key] = true; // create key
                 prv.res.push(cur); // push (cur) to array (res)
             }
             return prv; // return prv
         }, { key: {}, res: [] }).res.sort(); // select array (res) and sort
-    // console.log(resultIngredients);
-    // display list of ingredients on screen
+    
+        const searchValueIngredients = document.getElementById('search-drop_ing').value;
+        resultIngredients = resultIngredients.filter((x) => x.toLowerCase().normalize("NFD").includes(searchValueIngredients.toLowerCase().normalize("NFD")));
+        
+        // display list of ingredients on screen
+        // console.log(resultIngredients);
     document.getElementById('drop-ingredients_open').innerHTML = resultIngredients.map(
         (x) => `
                     <a href="#" class="linkIngr" id="${x}" data-name="${x}">
@@ -101,10 +129,11 @@ function sortByIngredients() {
                 `
     ).join('');
 
+
 };
 
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
-    // console.log(e.target.dataset.name);
+    // console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
 })
 
@@ -112,8 +141,9 @@ document.getElementById('drop-ingredients_open').addEventListener('click', funct
 function sortByAppliance() {
     let resultAppliance;
 
-    resultAppliance = recipes.map((x) => x.appliance.toLowerCase()).reduce(function (prv, cur) {
+    resultAppliance = recipes.map((x) => x.appliance.toLowerCase()).reduce(
         // delete redundancies
+        function (prv, cur) {
         let key = cur;
 
         if (!prv.key[key]) {
@@ -124,6 +154,10 @@ function sortByAppliance() {
     }, { key: {}, res: [] }).res.sort();
     // console.log(resultAppliance);
 
+    const searchValueAppliance = document.getElementById('search-drop_app').value;
+    resultAppliance = resultAppliance.filter((x) => x.toLowerCase().normalize("NFD").includes(searchValueAppliance.toLowerCase().normalize("NFD")));
+
+
     document.getElementById('drop-appareil_open').innerHTML = resultAppliance.map(
         (x) => `
                     <a href="#" class="linkDesc" id="${x}" data-name="${x}">
@@ -131,11 +165,10 @@ function sortByAppliance() {
                     </a>
                 `
     ).join('');
-
 };
 
 document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
-    console.log(e.target.dataset.name);
+    // console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
 })
 
@@ -144,20 +177,24 @@ function sortByUstensiles() {
 
     resultUstensiles =
         recipes.filter
-            (x => x.ustensils).flatMap // to flat the result to a single array
-            (x => x.ustensils.map
-                (x => x.toLowerCase().normalize("NFD"))).reduce(function (prv, cur) {
-
+            (x => x.ustensils).flatMap( // to flat the result to a single array
+            (x) => x.ustensils.map(
+                (x) => x.toLowerCase().normalize("NFD"))).reduce(
+                    function (prv, cur) {
+                        // console.log(prv, cur);
                     let key = cur;
-
                     if (!prv.key[key]) {
                         prv.key[key] = true;
                         prv.res.push(cur);
                     }
                     return prv;
-                }, { key: {}, res: [] }).res;
-    resultUstensiles.sort();
+                }, { key: {}, res: [] }).res.sort();
     // console.log(resultUstensiles);
+
+    const searchValueUstensiles = document.getElementById('search-drop_ust').value;
+    resultUstensiles = resultUstensiles.filter((x) => x.toLowerCase().normalize("NFD").includes(searchValueUstensiles.toLowerCase().normalize("NFD")));
+
+
     document.getElementById('drop-ustensiles_open').innerHTML = resultUstensiles.map(
         (x) => `
                     <a href="#" class="linkUste" id="${x}" data-name="${x}">
@@ -165,11 +202,10 @@ function sortByUstensiles() {
                     </a>
                 `
     ).join('');
-
 };
 
 document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
-    // console.log(e.target.dataset.name);
+    console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
 })
 

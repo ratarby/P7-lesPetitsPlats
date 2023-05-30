@@ -241,10 +241,10 @@ a {
 
 .search-ing_all,
 .search-ing_all input {
-    height: 22px;
+    height: 32px;
     background-color: #3282f7;
     border: none;
-    padding: 0.5rem 0.2rem;
+    padding: 0.5rem 0.5rem;
     color: white;
     font-size: unset;
 
@@ -252,20 +252,20 @@ a {
 
 .search-app_all,
 .search-app_all input {
-    height: 22px;
+    height: 32px;
     background-color: #68d9a4;
     border: none;
-    padding: 0.5rem 0.2rem;
+    padding: 0.5rem 0.5rem;
     color: white;
     font-size: unset;
 }
 
 .search-ust_all,
 .search-ust_all input {
-    height: 22px;
+    height: 32px;
     background-color: #ed6454;
     border: none;
-    padding: 0.5rem 0.2rem;
+    padding: 0.5rem 0.5rem;
     color: white;
     font-size: unset;
 }
