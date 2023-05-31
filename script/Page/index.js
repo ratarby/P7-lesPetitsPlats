@@ -1,3 +1,10 @@
+// refresh page
+window.addEventListener('keydown', function (e) {
+    // console.log(e.key);
+    if(e.key === 'Escape'){
+        window.location.reload();
+    }
+})
 
 console.log(recipes);
 
@@ -55,8 +62,8 @@ function displayRecipesCard(searchValue) {
     }
 }
 
-
-document.getElementById('search').addEventListener('click', function () {
+// search by click event
+document.getElementById('search').addEventListener('click', function (e) {
     const searchValue = document.getElementById("search-all-recipes").value;// valeur de la barre de recherche
     if (searchValue.length >= 3) {
         displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
@@ -64,6 +71,23 @@ document.getElementById('search').addEventListener('click', function () {
     console.log("search : " + searchValue); // tableau de recettes vide que l'utilisateur rempliera la valeur de la barre de recherche
 });
 
+// search by keyup event
+document.getElementById('search-all-recipes').addEventListener('keyup', function () {
+    const searchValue = document.getElementById("search-all-recipes").value;// valeur de la barre de recherche
+    if (searchValue.length >= 3) {
+        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
+    }
+
+// search by change event
+    console.log("search : " + searchValue); // tableau de recettes vide que l'utilisateur rempliera la valeur de la barre de recherche
+});
+document.getElementById('search-all-recipes').addEventListener('change', function () {
+    const searchValue = document.getElementById("search-all-recipes").value;// valeur de la barre de recherche
+    if (searchValue.length >= 3) {
+        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
+    }
+    console.log("search : " + searchValue); // tableau de recettes vide que l'utilisateur rempliera la valeur de la barre de recherche
+});
 
 // sort and display recipes by ingredients, appliance and ustensils 
 sortByIngredients(); // ok
@@ -73,25 +97,31 @@ sortByUstensiles(); // ok
 
 
 // search by ingredients list
+// keyup event
 document.getElementById('search-drop_ing').addEventListener('keyup', function (e) {
     sortByIngredients();
 })
+// change event
 document.getElementById('search-drop_ing').addEventListener('change', function (e) {
     sortByIngredients();
 })
 
 // search by appliance's list
+// keyup event
 document.getElementById('search-drop_app').addEventListener('keyup', function (e) {
     sortByAppliance();
 })
+// change event
 document.getElementById('search-drop_app').addEventListener('change', function (e) {
     sortByAppliance();
 })
 
 // search by ustensils list
+// keyup event
 document.getElementById('search-drop_ust').addEventListener('keyup', function (e) {
     sortByUstensiles();
 })
+// change event
 document.getElementById('search-drop_ust').addEventListener('change', function (e) {
     sortByUstensiles();
 })
@@ -109,9 +139,9 @@ function sortByIngredients() {
             // console.log(prv,cur);
             let key = cur; // init key value
 
-            if (!prv.key[key]) { // if key{} and key[] does not exist
+            if (!prv.key[key]) { // if key{} and key[] do not exist
                 prv.key[key] = true; // create key
-                prv.res.push(cur); // push (cur) to array (res)
+                prv.res.push(cur); // push (cur) to array (prv.res)
             }
             return prv; // return prv
         }, { key: {}, res: [] }).res.sort(); // select array (res) and sort
@@ -128,12 +158,12 @@ function sortByIngredients() {
                     </a>
                 `
     ).join('');
-
-
 };
 
+
+// display ingredients' list
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
-    // console.log(`clicked on : "${e.target.dataset.name}"`);
+    console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
 })
 
@@ -167,6 +197,7 @@ function sortByAppliance() {
     ).join('');
 };
 
+// display appliances' list
 document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
     // console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
@@ -204,6 +235,7 @@ function sortByUstensiles() {
     ).join('');
 };
 
+// display ustensils' list
 document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
     console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
