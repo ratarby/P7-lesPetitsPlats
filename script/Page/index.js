@@ -1,7 +1,7 @@
 // refresh page
 window.addEventListener('keydown', function (e) {
     // console.log(e.key);
-    if(e.key === 'Escape'){
+    if(e.key === 'Escape'){ // press Escape to reload page
         window.location.reload();
     }
 })
@@ -99,33 +99,82 @@ sortByUstensiles(); // ok
 // search by ingredients list
 // keyup event
 document.getElementById('search-drop_ing').addEventListener('keyup', function (e) {
-    sortByIngredients();
+    // if main search value is equal to sortByIngredients then sortByIngredients
+    // if not, display error message wich is displayed when main search value is not equal to sortByIngredients
+    if (mainSearchValueIng() == sortByIngredients() ) { 
+        sortByIngredients();
+    } else if ( mainSearchValueIng() != sortByIngredients() ) {
+        sortByIngredients();
+    }
 })
 // change event
 document.getElementById('search-drop_ing').addEventListener('change', function (e) {
-    sortByIngredients();
+    if (mainSearchValueIng() == sortByIngredients() ) { 
+        sortByIngredients();
+    } else if ( mainSearchValueIng() != sortByIngredients() ) {
+        sortByIngredients();
+    }
 })
 
 // search by appliance's list
 // keyup event
 document.getElementById('search-drop_app').addEventListener('keyup', function (e) {
-    sortByAppliance();
+    // if main search value is equal to sortByAppliance then sortByAppliance
+    // if not, display error message wich is displayed when main search value is not equal to sortByAppliance
+    if (mainSearchValueApp() == sortByAppliance() ) {
+        sortByAppliance();
+    } else if ( mainSearchValueApp() != sortByAppliance() ) {
+        sortByAppliance();
+    }
 })
 // change event
 document.getElementById('search-drop_app').addEventListener('change', function (e) {
-    sortByAppliance();
+    if (mainSearchValue() == sortByAppliance() ) {
+        sortByAppliance();
+    } else if ( mainSearchValue() != sortByAppliance() ) {
+        sortByAppliance();
+    }
 })
 
 // search by ustensils list
 // keyup event
 document.getElementById('search-drop_ust').addEventListener('keyup', function (e) {
-    sortByUstensiles();
+    if (mainSearchValueUst() == sortByUstensiles() ) {
+        sortByUstensiles();
+    } else if ( mainSearchValueUst() != sortByUstensiles() ) {
+        sortByUstensiles();
+    }
 })
 // change event
 document.getElementById('search-drop_ust').addEventListener('change', function (e) {
-    sortByUstensiles();
+    if  (mainSearchValueUst() == sortByUstensiles() ) {
+        sortByUstensiles();
+    } else if ( mainSearchValueUst() != sortByUstensiles() ) {
+        sortByUstensiles();
+    }
 })
 
+// main search value ingredients
+function mainSearchValueIng() {
+    const searchValue = document.getElementById("search-drop_ing").value;
+    if (searchValue.length >= 3) {
+        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
+    }
+}
+// main search value appliance
+function mainSearchValueApp() {
+    const searchValue = document.getElementById("search-drop_app").value;
+    if (searchValue.length >= 3) {
+        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
+    }
+}
+// main search value ustensils
+function mainSearchValueUst() {
+    const searchValue = document.getElementById("search-drop_ust").value;
+    if (searchValue.length >= 3) {
+        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
+    }
+}
 
 function sortByIngredients() {
     let resultIngredients;
@@ -133,18 +182,18 @@ function sortByIngredients() {
     // display list of ingredients in devtool
     // flatMap deletes nested arrays and returns an array
     resultIngredients = recipes.flatMap(x => x.ingredients.map(x => x.ingredient.toLowerCase().normalize("NFD"))).reduce(
-        // delete redundancies with reduce method parmeter (prv, cur) 
-        // prv as an object value and cur as current value
-        function (prv, cur) { 
-            // console.log(prv,cur);
-            let key = cur; // init key value
+        // delete redundancies using reduce method which call a callback function and returns an array (prv, cur) 
+        // prv as an accumulator (initial value) and cur as current value
+        (prv, cur) => {
+        // console.log(prv,cur);
+        let key = cur; // init key value
 
-            if (!prv.key[key]) { // if key{} and key[] do not exist
-                prv.key[key] = true; // create key
-                prv.res.push(cur); // push (cur) to array (prv.res)
-            }
-            return prv; // return prv
-        }, { key: {}, res: [] }).res.sort(); // select array (res) and sort
+        if (!prv.key[key]) { // if key{} and key[] do not exist
+            prv.key[key] = true; // create key
+            prv.res.push(cur); // push (cur) to array (prv.res)
+        }
+        return prv; // return prv
+    }, { key: {}, res: [] }).res.sort(); // select array (res) and sort
     
         const searchValueIngredients = document.getElementById('search-drop_ing').value;
         resultIngredients = resultIngredients.filter((x) => x.toLowerCase().normalize("NFD").includes(searchValueIngredients.toLowerCase().normalize("NFD")));
@@ -171,7 +220,7 @@ document.getElementById('drop-ingredients_open').addEventListener('click', funct
 function sortByAppliance() {
     let resultAppliance;
 
-    resultAppliance = recipes.map((x) => x.appliance.toLowerCase()).reduce(
+    resultAppliance = recipes.flatMap((x) => x.appliance.toLowerCase()).reduce(
         // delete redundancies
         function (prv, cur) {
         let key = cur;
@@ -207,12 +256,12 @@ function sortByUstensiles() {
     let resultUstensiles;
 
     resultUstensiles =
-        recipes.filter
-            (x => x.ustensils).flatMap( // to flat the result to a single array
+        recipes.filter(
+            (x) => x.ustensils).flatMap( // to flat the result to a single array
             (x) => x.ustensils.map(
                 (x) => x.toLowerCase().normalize("NFD"))).reduce(
-                    function (prv, cur) {
-                        // console.log(prv, cur);
+                    (prv, cur) => {
+                    // console.log(prv, cur);
                     let key = cur;
                     if (!prv.key[key]) {
                         prv.key[key] = true;
