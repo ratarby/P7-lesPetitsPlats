@@ -11,23 +11,26 @@ console.log(recipes);
 // display recipes
 displayRecipesCard('');
 
+// display ingredients' list, appliances' list, ustensils' list
+displayIngredientsList();
+displayAppliancesList();
+displayUstansilsList();
+
 // main search bar
 mainSearchBar();
-
 
 // sort by ingredients, appliance, ustensils
 sortByIngredients(); // ok
 sortByAppliance(); // ok
 sortByUstensiles(); // ok
 
-// search by ingredients list, appliance's list, ustensils list
+// search by ingredients' list, appliances' list, ustensils' list
 searchByingredientsList();
 searchByAppliancesList();
 searchByUstensilsList();
 
 
-
-
+// display recipes
 function displayRecipesCard(searchValue) {
     // Filter the recipes based on the search value
     let result;
@@ -76,8 +79,7 @@ function displayRecipesCard(searchValue) {
     }
 }
 
-
-
+// main search bar
 function mainSearchBar() {
     // search by click event
     document.getElementById('search').addEventListener('click', function () {
@@ -108,6 +110,7 @@ function mainSearchBar() {
     });
 }
 
+// search by ustensils' list
 function searchByUstensilsList() {
     // keyup event
     document.getElementById('search-drop_ust').addEventListener('keyup', function () {
@@ -127,6 +130,7 @@ function searchByUstensilsList() {
     });
 }
 
+// search by appliances' list
 function searchByAppliancesList() {
     // keyup event
     document.getElementById('search-drop_app').addEventListener('keyup', function () {
@@ -148,6 +152,7 @@ function searchByAppliancesList() {
     });
 }
 
+// search by ingredients' list
 function searchByingredientsList() {
     // keyup event
     document.getElementById('search-drop_ing').addEventListener('keyup', function () {
@@ -176,6 +181,7 @@ function mainSearchValueIng() {
         displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
     }
 }
+
 // main search value appliance
 function mainSearchValueApp() {
     const searchValue = document.getElementById("search-drop_app").value;
@@ -190,7 +196,7 @@ function mainSearchValueUst() {
         displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
     }
 }
-
+// sort by ingredients
 function sortByIngredients() {
     let resultIngredients;
 
@@ -225,11 +231,7 @@ function sortByIngredients() {
     ).join('');
 };
 
-
 // display ingredients' list
-displayIngredientsList();
-
-
 function displayIngredientsList() {
     document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
         console.log(`clicked on : "${e.target.dataset.name}"`);
@@ -238,7 +240,7 @@ function displayIngredientsList() {
     });
 }
 
-
+// sort by appliance
 function sortByAppliance() {
     let resultAppliance;
 
@@ -270,11 +272,13 @@ function sortByAppliance() {
 };
 
 // display appliances' list
-document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
-    // console.log(`clicked on : "${e.target.dataset.name}"`);
-    displayRecipesCard(e.target.dataset.name);
-})
-
+function displayAppliancesList() {
+    document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
+        // console.log(`clicked on : "${e.target.dataset.name}"`);
+        displayRecipesCard(e.target.dataset.name);
+    });
+}
+// sort by ustensiles
 function sortByUstensiles() {
     let resultUstensiles;
 
@@ -309,9 +313,10 @@ function sortByUstensiles() {
 };
 
 // display ustensils' list
-document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
-    console.log(`clicked on : "${e.target.dataset.name}"`);
-    displayRecipesCard(e.target.dataset.name);
-})
-
+function displayUstansilsList() {
+    document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
+        console.log(`clicked on : "${e.target.dataset.name}"`);
+        displayRecipesCard(e.target.dataset.name);
+    });
+}
 
