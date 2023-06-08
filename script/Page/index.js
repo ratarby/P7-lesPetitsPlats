@@ -11,13 +11,12 @@ console.log(recipes);
 // display recipes
 displayRecipesCard('');
 
-// display ingredients' list, appliances' list, ustensils' list
-displayIngredientsList();
-displayAppliancesList();
-displayUstansilsList();
+// display ingredients' list, appliances' list, ustensils' list and tags
+// displayIngredientsTags();
+// displayAppliancesTags();
+// displayUstansilsTags();
 
-// main search bar
-mainSearchBar();
+mainSearchBar(); // ok
 
 // sort by ingredients, appliance, ustensils
 sortByIngredients(); // ok
@@ -25,9 +24,9 @@ sortByAppliance(); // ok
 sortByUstensiles(); // ok
 
 // search by ingredients' list, appliances' list, ustensils' list
-searchByingredientsList();
-searchByAppliancesList();
-searchByUstensilsList();
+searchByIngredientsList(); // ok
+searchByAppliancesList(); // ok
+searchByUstensilsList(); // ok
 
 
 // display recipes
@@ -35,13 +34,14 @@ function displayRecipesCard(searchValue) {
     // Filter the recipes based on the search value
     let result;
 
-    resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-    resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-    resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-    resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-    resultDescription = recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))); // optimizing the search value by reducing the number of requests
-
-    result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
+        resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+        resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+        resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
+        resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
+        resultDescription = recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))); // optimizing the search value by reducing the number of requests
+    
+        result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
+    
     // console.log(result);
 
     // Display  recipes by names, appliance, ustensils
@@ -79,9 +79,10 @@ function displayRecipesCard(searchValue) {
     }
 }
 
-// main search bar
-function mainSearchBar() {
+    /*-------------------------main search bar-----------------*/ 
     // search by click event
+
+function mainSearchBar() {
     document.getElementById('search').addEventListener('click', function () {
         // main search value which  used when user input a value in the search bar (keyword, recipe,etc...)
         const searchValue = document.getElementById("search-all-recipes").value; // value of the search bar
@@ -110,23 +111,17 @@ function mainSearchBar() {
     });
 }
 
+    /*-----------------------------------------------------*/
+
 // search by ustensils' list
 function searchByUstensilsList() {
     // keyup event
     document.getElementById('search-drop_ust').addEventListener('keyup', function () {
-        if (mainSearchValueUst() == sortByUstensiles()) {
             sortByUstensiles();
-        } else if (mainSearchValueUst() != sortByUstensiles()) {
-            sortByUstensiles();
-        }
     });
     // change event
     document.getElementById('search-drop_ust').addEventListener('change', function () {
-        if (mainSearchValueUst() == sortByUstensiles()) {
             sortByUstensiles();
-        } else if (mainSearchValueUst() != sortByUstensiles()) {
-            sortByUstensiles();
-        }
     });
 }
 
@@ -134,68 +129,28 @@ function searchByUstensilsList() {
 function searchByAppliancesList() {
     // keyup event
     document.getElementById('search-drop_app').addEventListener('keyup', function () {
-        // if main search value is equal to sortByAppliance then sortByAppliance
-        // if not, display error message wich is displayed when main search value is not equal to sortByAppliance
-        if (mainSearchValueApp() == sortByAppliance()) {
             sortByAppliance();
-        } else if (mainSearchValueApp() != sortByAppliance()) {
-            sortByAppliance();
-        }
     });
     // change event
     document.getElementById('search-drop_app').addEventListener('change', function () {
-        if (mainSearchValue() == sortByAppliance()) {
             sortByAppliance();
-        } else if (mainSearchValue() != sortByAppliance()) {
-            sortByAppliance();
-        }
     });
 }
 
 // search by ingredients' list
-function searchByingredientsList() {
+
+function searchByIngredientsList() {
     // keyup event
     document.getElementById('search-drop_ing').addEventListener('keyup', function () {
-        // if main search value is equal to sortByIngredients then sortByIngredients
-        // if not, display error message wich is displayed when main search value is not equal to sortByIngredients
-        if (mainSearchValueIng() == sortByIngredients()) {
-            sortByIngredients();
-        } else if (mainSearchValueIng() != sortByIngredients()) {
-            sortByIngredients();
-        }
+        sortByIngredients();
+        // console.log("search : " + document.getElementById("search-drop_ing").value);
     });
-    // change event
     document.getElementById('search-drop_ing').addEventListener('change', function () {
-        if (mainSearchValueIng() == sortByIngredients()) {
-            sortByIngredients();
-        } else if (mainSearchValueIng() != sortByIngredients()) {
-            sortByIngredients();
-        }
+        sortByIngredients();
+        // console.log("search : " + document.getElementById("search-drop_ing").value);
     });
 }
 
-// main search value ingredients
-function mainSearchValueIng() {
-    const searchValue = document.getElementById("search-drop_ing").value;
-    if (searchValue.length >= 3) {
-        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
-    }
-}
-
-// main search value appliance
-function mainSearchValueApp() {
-    const searchValue = document.getElementById("search-drop_app").value;
-    if (searchValue.length >= 3) {
-        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
-    }
-}
-// main search value ustensils
-function mainSearchValueUst() {
-    const searchValue = document.getElementById("search-drop_ust").value;
-    if (searchValue.length >= 3) {
-        displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
-    }
-}
 // sort by ingredients
 function sortByIngredients() {
     let resultIngredients;
@@ -231,14 +186,13 @@ function sortByIngredients() {
     ).join('');
 };
 
+document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
+// console.log(`clicked on : "${e.target.dataset.name}"`);
+displayRecipesCard(e.target.dataset.name);
+});
+
+
 // display ingredients' list
-function displayIngredientsList() {
-    document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
-        console.log(`clicked on : "${e.target.dataset.name}"`);
-        // display recipe(s) of the clicked element
-        displayRecipesCard(e.target.dataset.name);
-    });
-}
 
 // sort by appliance
 function sortByAppliance() {
@@ -271,20 +225,32 @@ function sortByAppliance() {
     ).join('');
 };
 
-// display appliances' list
-function displayAppliancesList() {
-    document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
+// search by appliances' list
+
+document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
+// console.log(`clicked on : "${e.target.dataset.name}"`);
+displayRecipesCard(e.target.dataset.name);
+})
+
+function searchByAppliancesList() {
+    document.getElementById('search-drop_app').addEventListener('keyup', function () {
         // console.log(`clicked on : "${e.target.dataset.name}"`);
-        displayRecipesCard(e.target.dataset.name);
+        sortByAppliance();
+    });
+    document.getElementById('search-drop_app').addEventListener('change', function () {
+        // console.log(`clicked on : "${e.target.dataset.name}"`);
+        sortByAppliance();
     });
 }
+
+
 // sort by ustensiles
 function sortByUstensiles() {
     let resultUstensiles;
-
+// to flat the result to a single array
     resultUstensiles =
         recipes.filter(
-            (x) => x.ustensils).flatMap( // to flat the result to a single array
+            (x) => x.ustensils).flatMap( 
                 (x) => x.ustensils.map(
                     (x) => x.toLowerCase().normalize("NFD"))).reduce(
                         (prv, cur) => {
@@ -312,11 +278,8 @@ function sortByUstensiles() {
     ).join('');
 };
 
-// display ustensils' list
-function displayUstansilsList() {
-    document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
-        console.log(`clicked on : "${e.target.dataset.name}"`);
-        displayRecipesCard(e.target.dataset.name);
-    });
-}
+document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
+// console.log(`clicked on : "${e.target.dataset.name}"`);
+displayRecipesCard(e.target.dataset.name);
+})
 

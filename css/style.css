@@ -329,9 +329,9 @@ a {
     line-height: 37px;
 }
 
-.tagsIngr,
-.tagsAppl,
-.tagsUst {
+#tagsIngr,
+#tagsAppl,
+#tagsUst {
     display: flex;
     flex-wrap: wrap;
 }
