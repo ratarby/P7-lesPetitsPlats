@@ -133,16 +133,21 @@ a {
     font-size: 18px;
 }
 
-.fa-chevron-down {
+
+.fas.fa-chevron-down {
     font-size: 1rem;
     position: relative;
     top: 20px;
     right: 15px;
+    cursor: pointer;
 }
 
-.fa-chevron-up {
+
+
+.fas.fa-chevron-up {
     font-size: 1rem;
     color: white;
+    cursor: pointer;
 }
 
 .drop-menu_closed {
@@ -159,12 +164,22 @@ a {
 #drop-ingredients_closed input,
 #drop-ingredients_open {
     background-color: #3282f7;
+    cursor:default;
+}
+
+#drop-ingredients_closed::placeholder {
+    cursor:default;
 }
 
 #drop-appareil_closed,
 #drop-appareil_closed input,
 #drop-appareil_open {
     background-color: #68d9a4;
+    cursor: default;
+}
+
+#drop-appareil_closed::placeholder {
+    cursor: default;
 }
 
 #drop-ustensiles_closed,
@@ -173,12 +188,19 @@ a {
     background-color: #ed6454;
 }
 
+#drop-ustensiles_closed::placeholder {
+    cursor: default;
+}
+
 #drop-ingredients_open,
 #drop-appareil_open,
 #drop-ustensiles_open {
     padding-left: 1rem;
     overflow: scroll;
+    cursor: default;
 }
+
+
 
 .drop-ingredients {
     margin-right: 0.5rem;
