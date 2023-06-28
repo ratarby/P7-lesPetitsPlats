@@ -524,12 +524,14 @@ main img {
         right: 2rem;
     }
 
-    .tags,
-    .tagsIngr,
-    .tagsAppl,
-    .tagsUst {
-        width: 100%;
+    .tags {
+        margin: 1rem 1rem 1rem 0rem;
+        display: flex;
         flex-wrap: wrap;
+    }
+
+    #tags{
+        width: 100%;
     }
 
     .search-every {
