@@ -6,6 +6,13 @@ window.addEventListener('keydown', function (e) {
     }
 })
 
+
+// Create global variables to handle ingredients'tag, appliances'tag and ustensils'tag
+let tagsIngredients = [];
+let tagsAppliances = [];
+let tagsUstensils = [];
+
+
 // console.log(recipes);
 
 // display recipes
@@ -29,46 +36,74 @@ searchByAppliancesList(); // ok
 searchByUstensilsList(); // ok
 
 
-// display recipes
+/**
+ * Display recipes card based on search value and tags.
+ * @param {string} searchValue - The search value to filter recipes.
+ */
 function displayRecipesCard(searchValue) {
-    // Filter the recipes based on the search value
-    let result;
+    // Filter the recipes based on the search value and tags
+    let result = [];
 
-    resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-    resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-    resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-    resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-    resultDescription = recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))); // optimizing the search value by reducing the number of requests
+    // Check if there are no tags selected
+    const noTag = tagsIngredients.length === 0 && tagsAppliances.length === 0 && tagsUstensils.length === 0;
 
-    result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
+    // Filter recipes based on search value
+    if (searchValue.length > 0 || noTag) {
+        resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+        resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
+        resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
+        resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
+        resultDescription = recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
 
-    // console.log(result);
+        result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
+    }
 
-    // Display  recipes by names, appliance, ustensils
+    // Filter recipes based on ingredients tags
+    tagsIngredients.forEach(element => {
+        resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(element.toLowerCase().normalize("NFD")));
+        
+        result = result.concat(resultIngredient);
+    });
+
+    // Filter recipes based on appliance tags
+    tagsAppliances.forEach(element => {
+        resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(element.toLowerCase().normalize("NFD")));
+        
+        result = result.concat(resultAppliance);
+    });
+
+    // Filter recipes based on ustensils tags
+    tagsUstensils.forEach(element => {
+        resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(element.toLowerCase().normalize("NFD")));
+        
+        result = result.concat(resultUstensils);
+    });
+
+    // Display recipes by names, appliance, ustensils
     document.getElementById('recipes').innerHTML = result.map(
         (x) => `
         <article class="article" id="${x.id}" tabindex="0">
-                <div class="photo"><img src="assets/img/logo.svg"/></div>
-                <div class="article-all">
-                    <div class="title">
-                        <div class="title-txt">${x.name}</div>
-                        <div class="title-time"><i class="far fa-clock"></i> ${x.time}</div>
-                    </div>
+            <div class="photo"><img src="assets/img/logo.svg"/></div>
+            <div class="article-all">
+                <div class="title">
+                    <div class="title-txt">${x.name}</div>
+                    <div class="title-time"><i class="far fa-clock"></i> ${x.time}</div>
+                </div>
                     
                 <div class="details">
                     <div class="details-ingr">
-                    ${x.ingredients.map((y) => `
-                    <span>${y.ingredient ? y.ingredient : ""}    
-                        ${y.quantity ? " : " + y.quantity : ""} 
-                        ${y.unit ? y.unit : ""} 
-                    </span>` ).join('')}
+                        ${x.ingredients.map((y) => `
+                        <span>${y.ingredient ? y.ingredient : ""}    
+                            ${y.quantity ? " : " + y.quantity : ""} 
+                            ${y.unit ? y.unit : ""} 
+                        </span>` ).join('')}
                     </div>
-                <div class="details-txt">
-                    ${x.description}
+                    <div class="details-txt">
+                        ${x.description}
+                    </div>
                 </div>
             </div>
-            </div>
-    </article>`
+        </article>`
     ).join('');
 
     // Display an error message if no recipes were found

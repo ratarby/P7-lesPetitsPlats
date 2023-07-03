@@ -1,282 +1,265 @@
+// console.log(recipes);
 
-console.log(recipes);
-
-// push ingredients, appliance and ustensils in tags array
 let tags = [];
-// console.log(tags);
 
-createArrayTags();
+improveSnippet();
 
+// Create impreve snippet   for best practice and readabilities 
+function improveSnippet() {
 
-// declare quote's array and initialize it with stringified tags
-let quote = joinArrays();
+    // createArrayTags();
 
-// Create tag's array from stringified tags using split method
-let tag = quote.split(',');
-console.log(tag); 
+    let quote = joinArrays();
 
-// stringify tags to create a new array tag
-function joinArrays() {
-    for (let i = 0; i < tags.length; i++) {
-        if (Array.isArray(tags[i])) {
-            tags[i] = tags[i].join(``);
-        }
+    let tag = quote.split(',');
+
+    function joinArrays() {
+        const flattenedArray = [...tags].flatMap(x => Array.isArray(x) ? x.join('') : x);
+        const splitedArray = flattenedArray.flatMap(x => x.split(' '));
+        const splitedArray2 = [...new Set(splitedArray)];
+        return splitedArray2.join(' ');
     }
-    
-    const flattenedArray = [...tags];
-    const splitedArray = flattenedArray.flat(x => x.split(` `));
-    const splitedArray2 = [...new Set(splitedArray)];
-    return splitedArray2.join(` `);
-}
-joinArrays();
-console.log(joinArrays());
 
-function displayTag() {
-    document.getElementById('drop-ingredients_open').innerHTML = tag.map(
-        (x) => `
-                <a href="#" class="linkIngr" id="${x}" data-name="${x}">
-                        ${x}
-                </a>
-            `
-    ).join('');
-}
+    // function createArrayTags() {
+    //     const { ingredients = [], appliance: appliance = [], ustensils = [] } = recipes;
+
+    //     tags.push(ingredients, appliance, ustensils);
+
+    //     ingredients.push(...ingredients);
+    //     appliance.push(...appliance);
+    //     ustensils.push(...ustensils);
+
+    //     ingredients.push(recipes.flatMap(x => x.ingredients.map(x => x.ingredient.toLowerCase().normalize("NFD"))).reduce(
+    //         (prv, cur) => {
+    //             let key = cur;
+
+    //             if (!prv.key[key]) {
+    //                 prv.key[key] = true;
+    //                 prv.res.push(key);
+    //             }
+    //             return prv;
+    //         }, { key: {}, res: [] }).res.sort());
+
+    //     appliance.push(recipes.flatMap(x => x.appliance.toLowerCase().normalize("NFD")).reduce(
+    //         (prv, cur) => {
+    //             let key = cur;
+
+    //             if (!prv.key[key]) {
+    //                 prv.key[key] = true;
+    //                 prv.res.push(key);
+    //             }
+    //             return prv;
+    //         }, { key: {}, res: [] }).res.sort());
+
+    //     ustensils.push(recipes.filter(
+    //         (x) => x.ustensils).flatMap(
+    //             (x) => x.ustensils.map(
+    //                 (x) => x.toLowerCase().normalize("NFD"))).reduce(
+    //                     (prv, cur) => {
+    //                         let key = cur;
+
+    //                         if (!prv.key[key]) {
+    //                             prv.key[key] = true;
+    //                             prv.res.push(key);
+    //                         }
+    //                         return prv;
+    //                     }, { key: {}, res: [] }).res.sort());
+    // }
+
+    // function addTagElement(e) {
+    //     const tag = document.createElement('div');
+    //     tag.setAttribute('class', 'tags');
+    //     tag.setAttribute('data-name', e.target.dataset.name);
+    //     tag.textContent += e.target.dataset.name;
+
+    //     const tagsList = document.getElementById('tags');
+    //     tagsList.appendChild(tag);
+
+    //     const removeIcon = document.createElement('i');
+    //     removeIcon.setAttribute('class', 'far fa-times-circle')
+    //     removeIcon.setAttribute('data-name', e.target.dataset.name);
+
+    //     removeIcon.addEventListener('click', function () {
+    //         tag.delete(e.target.dataset.name);
+    //         tag.remove();
+    //         displayRecipesCard(e.target.dataset.name);
+    //     });
+
+    //     newTag.appendChild(removeIcon);
+    // }
+
+    function handleClickIngr(e) {
+        tags.push(...new Set([...tagsIngredients]));
+        tagsIngredients.push(e.target.dataset.name);
+
+        const newTagIngr = document.createElement('div');
+        newTagIngr.setAttribute('class', 'tags tagIngr');
+        newTagIngr.setAttribute('data-name', e.target.dataset.name);
+        newTagIngr.textContent += e.target.dataset.name;
+
+        const removeIcon = document.createElement('i');
+        removeIcon.setAttribute('class', 'far fa-times-circle')
+        removeIcon.setAttribute('data-name', e.target.dataset.name);
+
+        const tagsListIngr = document.getElementById('tags');
+        newTagIngr.appendChild(removeIcon);
+        tagsListIngr.appendChild(newTagIngr);
+
+        displayRecipesCard('');
+
+        removeIcon.addEventListener('click', function () {
+            tagsIngredients.splice(tagsIngredients.indexOf(e.target.dataset.name), 1);
+            newTagIngr.remove();
+            displayRecipesCard(e.target.dataset.name)
+
+        });
+    }
+
+    function displayIngredientsTags() {
+        document.getElementById('drop-ingredients_open').addEventListener('click', (e) => handleClickIngr(e));
+    }
+
+    function handleClickAppl(e) {
+        tags.push(...new Set([...tagsAppliances]));
+        tagsAppliances.push(e.target.dataset.name);
+
+        const newTagAppl = document.createElement('div');
+        newTagAppl.setAttribute('class', 'tags tagAppl');
+        newTagAppl.setAttribute('data-name', e.target.dataset.name);
+        newTagAppl.textContent += e.target.dataset.name;
+
+        const removeIcon = document.createElement('i');
+        removeIcon.setAttribute('class', 'far fa-times-circle');
+        removeIcon.setAttribute('data-name', e.target.dataset.name);
+
+        const tagsListAppl = document.getElementById('tags');
+        newTagAppl.appendChild(removeIcon);
+        tagsListAppl.appendChild(newTagAppl);
+
+        removeIcon.addEventListener('click', function () {
+            tagsAppliances.splice(tagsAppliances.indexOf(e.target.dataset.name), 1);
+            newTagAppl.remove();
+            displayRecipesCard(e.target.dataset.name);
+        })
+    }
+
+    function displayAppliancesTags() {
+        document.getElementById('drop-appareil_open').addEventListener('click', (e) => handleClickAppl(e));
+    }
 
 
-displayIngredientsTags();
-displayAppliancesTags();
-displayUstensilesTags();
 
-// create array of tags by destructuring recipes to get default values I need
-// I also removed ingredients, appliance and ustensils 'redundacies using reduce method which call a callback function (prv, cur) and returns an array and transform: prv as an accumulator (initial value) and cur as current value. 
-// I transformed the strings to lower case and   push them in tags array
-function createArrayTags() {
-    // grab ingredients, appliance and ustensils by destructuring recipes to get default values
-    const { ingredients = [], appliance: appliance = [], ustensils = [] } = recipes;
+    function handleClickUst(e) {
+        tags.push(...new Set([...tagsUstensils]));
+        tagsUstensils.push(e.target.dataset.name);
 
-    tags.push(ingredients, appliance, ustensils);
+        const newTagUst = document.createElement('div');
+        newTagUst.setAttribute('data-name', e.target.dataset.name);
+        newTagUst.textContent += e.target.dataset.name;
 
+        const removeIcon = document.createElement('i');
+        removeIcon.setAttribute('class', 'far fa-times-circle');
+        removeIcon.setAttribute('data-name', e.target.dataset.name);
 
-    // push ingredients, appliance and ustensils in tags array
-    ingredients.push(...ingredients);
-    console.log("ingredients", ingredients);
-    appliance.push(...appliance);
-    console.log("appliance", appliance);
-    ustensils.push(...ustensils);
-    console.log("ustensils", ustensils);
+        const tagsListUst = document.getElementById('tags');
+        newTagUst.appendChild(removeIcon);
+        tagsListUst.appendChild(newTagUst);
 
+        // displayRecipesCard('');
 
-    ingredients.push(recipes.flatMap(x => x.ingredients.map(x => x.ingredient.toLowerCase().normalize("NFD"))).reduce(
-        // delete redundancies using reduce method which call a callback function and returns an array (prv, cur) 
-        // prv as an accumulator (initial value) and cur as current value
-        (prv, cur) => {
-            // console.log(prv,cur);
-            let key = cur; // init key value
+        removeIcon.addEventListener('click', function () {
+            tagsUstensils.splice(tagsUstensils.indexOf(e.target.dataset.name), 1);
+            newTagUst.remove();
+            displayRecipesCard(e.target.dataset.name)
+        })
 
-            if (!prv.key[key]) { // if key{} and key[] do not exist
-                prv.key[key] = true; // create key
-                prv.res.push(key); // push (cur) to array (prv.res)
-            }
-            return prv; // return prv
-        }, { key: {}, res: [] }).res.sort());
-    // console.log(ingredients);
+    }
 
-    appliance.push(recipes.flatMap(x => x.appliance.toLowerCase().normalize("NFD")).reduce(
-        // delete redundancies using reduce method which call a callback function and returns an array (prv, cur) 
-        // prv as an accumulator (initial value) and cur as current value
-        (prv, cur) => {
-            // console.log(prv,cur);
-            let key = cur; // init key value
-
-            if (!prv.key[key]) { // if key{} and key[] do not exist
-                prv.key[key] = true; // create key
-                prv.res.push(key); // push (cur) to array (prv.res)
-            }
-            return prv; // return prv
-        }, { key: {}, res: [] }).res.sort()); // select array (res) and sort);
+        function displayUstensilesTags() {
+            document.getElementById('drop-ustensiles_open').addEventListener('click', (e) => handleClickUst(e));
+    }
 
 
-    ustensils.push(recipes.filter(
-        (x) => x.ustensils).flatMap(
-            (x) => x.ustensils.map(
-                (x) => x.toLowerCase().normalize("NFD"))).reduce(
-                    // delete redundancies using reduce method which call a callback function and returns an array (prv, cur) 
-                    // prv as an accumulator (initial value) and cur as current value
-                    (prv, cur) => {
-                        // console.log(prv,cur);
-                        let key = cur; // init key value
+document.getElementById('tags').addEventListener('click', function (e) {
+    if (e.target && e.target.matches('i')) {
+        const tagName = e.target.dataset.name;
+        const tagElement = document.querySelector(`[data-name="${tagName}"]`);
+        tagElement.remove();
 
-                        if (!prv.key[key]) { // if key{} and key[] do not exist
-                            prv.key[key] = true; // create key
-                            prv.res.push(key); // push (cur) to array (prv.res)
-                        }
-                        return prv; // return prv
-                    }, { key: {}, res: [] }).res.sort());
-}
+        tagsIngredients.splice(tagsIngredients.indexOf(tagName), 1);
+        tagsAppliances.splice(tagsAppliances.indexOf(tagName), 1);
+        tagsUstensils.splice(tagsUstensils.indexOf(tagName), 1);
 
-function addTagElement(e) {
-    // Check if the clicked element has a 'data-name' attribute
+        displayRecipesCard(tagName < -1 ? tagName : 1);
+    }
+});
 
-    // Create new tag element
-    const tag = document.createElement('div');
-    tag.setAttribute('class', 'tags');
-    tag.setAttribute('data-name', e.target.dataset.name);
-    tag.textContent += e.target.dataset.name;
 
-    // Create tagList element
+function handleTagClick(e, tagType) {
+    reset();
+    // Add the clicked tag type to the tags array
+    tags.push(...new Set([...tagType]));
+
+    // Add the clicked tag to the tagType array
+    tagType.push(e.target.dataset.name);
+
+    // Create a new tag element
+    const newTag = document.createElement('div');
+    newTag.setAttribute('class', `tags tag ${tagType}`);
+    newTag.setAttribute('data-name', e.target.dataset.name);
+    newTag.textContent += e.target.dataset.name;
+
+    // Add the appropriate class based on the tag type
+    if (tagType === tagsIngredients) {
+        newTag.classList.add('tagIngr');
+    } else if (tagType === tagsAppliances) {
+        newTag.classList.add('tagAppl');
+    } else if (tagType === tagsUstensils) {
+        newTag.classList.add('tagUst');
+    }
+
+    // Create a remove icon element
+    const removeIcon = document.createElement('i');
+    removeIcon.setAttribute('class', 'far fa-times-circle');
+    removeIcon.setAttribute('data-name', e.target.dataset.name);
+
+    // Add the remove icon to the new tag element
+    newTag.appendChild(removeIcon);
+
+    // Append the new tag element to the tags list
     const tagsList = document.getElementById('tags');
-    tagsList.appendChild(tag);
+    tagsList.prepend(newTag);
 
-    // Create remove icon element
-    const removeIcon = document.createElement('i');
-    removeIcon.setAttribute('class', 'far fa-times-circle')
-    removeIcon.setAttribute('data-name', e.target.dataset.name);
-
-    // Append new tag and remove icon elements to the list of tags
+    // Add a click event listener to the remove icon
     removeIcon.addEventListener('click', function () {
-        // Remove the clicked tag from the tag set and remove the tag element from the list of tags
-        tag.delete(e.target.dataset.name);
-        tag.remove();
-        // Update the recipe cards and reload the page
+        // Remove the tag from the tag type array
+        tagType.slice(tagType.indexOf(tags), 1);
+        // Remove the tag element from the page
+        newTag.remove();
         displayRecipesCard(e.target.dataset.name);
+        if (tagType.length === 0) {
+            displayRecipesCard('');
+        }
     });
-
-    newTag.appendChild(removeIcon); // Add the remove icon to the new tag element
-}
-
-displayTag();
-console.log(displayTag());
-
-
-function handleClickIngr(e, tagsIngredients) {
-    // push displayIngredientTags in tags array
-    tags.push(...new Set([...tagsIngredients]));
-    console.log(tags);
-    // Add clicked ingredient to tagsIngredients' array
-    tagsIngredients.push(displayRecipesCard(e.target.dataset.name));
-    // Create new tag element.
-    const newTagIngr = document.createElement('div');
-    newTagIngr.setAttribute('class', 'tags tagIngr');
-    newTagIngr.setAttribute('data-name', e.target.dataset.name);
-    newTagIngr.textContent += e.target.dataset.name;
-
-    // Create remove icon element.
-    const removeIcon = document.createElement('i');
-    removeIcon.setAttribute('class', 'far fa-times-circle')
-    removeIcon.setAttribute('data-name', e.target.dataset.name);
-
-    // Append new tag and remove icon elements to the list of tags.
-    const tagsListIngr = document.getElementById('tags');
-    newTagIngr.appendChild(removeIcon);
-    tagsListIngr.appendChild(newTagIngr);
-
-    // Add a listener to the remove icon element.
-    removeIcon.addEventListener('click', function () {
-        tagsIngredients.splice(tagsIngredients.indexOf(e.target.dataset.name), 1);
-        newTagIngr.remove();
-        displayRecipesCard(e.target.dataset.name)
-
-    });
-}
-
-function displayIngredientsTags() {
-    // init tagsIngredients array
-    const tagsIngredients = recipes.flatMap((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")));
-    // console.log(tagsIngredients);
-
-    //  add event listener to display tags
-    document.getElementById('drop-ingredients_open').addEventListener('click', (e) => handleClickIngr(e, tagsIngredients));
-}
-
-function handleClickAppl(e, tagsAppliances) {
-    // push displayIngredientTags in tags array
-    tags.push(...new Set([...tagsAppliances]));
-    console.log(tags);
-    // Add clicked ingredient to the list of selected appliances.
-    // tagsAppliances.push("appliance" + e.target.dataset.name);
-    // console.log(`appliance : ${tagsAppliances.push(displayRecipesCard(e.target.dataset.name))}`);
-
-    // Create new tag element.
-    // -------------------------------------------------------- div
-    const newTagAppl = document.createElement('div');
-    newTagAppl.setAttribute('class', 'tags tagAppl');
-    newTagAppl.setAttribute('data-name', e.target.dataset.name);
-    newTagAppl.textContent += e.target.dataset.name;
-
-    // Create remove icon element.
-    // -------------------------------------------------------- i
-    const removeIcon = document.createElement('i');
-    removeIcon.setAttribute('class', 'far fa-times-circle');
-    removeIcon.setAttribute('data-name', e.target.dataset.name);
-
-    // Append new tag and remove icon elements to the list of tags.
-    // -------------------------------------------------------- div
-    const tagsListAppl = document.getElementById('tags');
-    // console.log(tagsListAppl);
-    newTagAppl.appendChild(removeIcon);
-    tagsListAppl.appendChild(newTagAppl);
-
-    removeIcon.addEventListener('click', function () {
-        tagsAppliances.splice(tagsAppliances.indexOf(e.target.dataset.name), 1);
-        newTagAppl.remove();
-        displayRecipesCard(e.target.dataset.name)
-    })
-}
-
-
-function displayAppliancesTags() {
-    // init tagsAppliances array
-    const tagsAppliances = recipes.flatMap((x) => x.appliance.toLowerCase().normalize("NFD"));
-    // console.log(tagsAppliances);
-
-    // add event listener to display tags
-    document.getElementById('drop-appareil_open').addEventListener('click', (e) => handleClickAppl(e, tagsAppliances));
+    console.log(tagType);
 }
 
 
 
-function handleClickUst(e, tagsUstensiles) {
-    // push displayUstensilesTags in tags array
-    tags.push(...new Set([...tagsUstensiles]));
-    console.log(tags);
-    // Add clicked ingredient to the list of selected appliances.
-    tagsUstensiles.push(e.target.dataset.name);
-    // console.log(`ustensile : ${tagsUstensiles.push("ustensiles" + e.target.dataset.name)}`);
-    // Create new tag element.
-    // -------------------------------------------------------- div
-    const newTagUst = document.createElement('div');
-    newTagUst.setAttribute('class', 'tags tagUst');
-    newTagUst.setAttribute('data-name', e.target.dataset.name);
-    newTagUst.textContent += e.target.dataset.name;
 
-    // Create remove icon element.
-    // -------------------------------------------------------- i
-    const removeIcon = document.createElement('i');
-    removeIcon.setAttribute('class', 'far fa-times-circle');
-    removeIcon.setAttribute('data-name', e.target.dataset.name);
+    function handleClickIngr(e) {
+        handleTagClick(e, tagsIngredients);
+    }
 
-    // Append new tag and remove icon elements to the list of tags.
-    // -------------------------------------------------------- div
-    const tagsListUst = document.getElementById('tags');
-    // console.log(tagsListUst);
-    newTagUst.appendChild(removeIcon);
-    tagsListUst.appendChild(newTagUst);
+    function handleClickAppl(e) {
+        handleTagClick(e, tagsAppliances);
+    }
 
-    removeIcon.addEventListener('click', function () {
-        tagsUstensiles.splice(tagsUstensiles.indexOf(e.target.dataset.name), 1);
-        newTagUst.remove();
-        displayRecipesCard(e.target.dataset.name)
-    })
+    function handleClickUst(e) {
+        handleTagClick(e, tagsUstensils);
+    }
 
-}
-
-function displayUstensilesTags() {
-    // init tagsUstensiles array
-    const tagsUstensiles = recipes.filter(
-        (x) => x.ustensils).flatMap(
-            (x) => x.ustensils.map(
-                (x) => x.toLowerCase().normalize("NFD")));
-    // console.log(tagsUstensiles);
-
-    //  add event listener to display tags 
-    document.getElementById('drop-ustensiles_open').addEventListener('click', (e) => handleClickUst(e, tagsUstensiles));
+    displayIngredientsTags();
+    displayAppliancesTags();
+    displayUstensilesTags();
 }
