@@ -196,7 +196,7 @@ document.getElementById('tags').addEventListener('click', function (e) {
 
 
 function handleTagClick(e, tagType) {
-    reset();
+
     // Add the clicked tag type to the tags array
     tags.push(...new Set([...tagType]));
 
