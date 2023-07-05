@@ -48,17 +48,29 @@ function displayRecipesCard(searchValue) {
     const noTag = tagsIngredients.length === 0 && tagsAppliances.length === 0 && tagsUstensils.length === 0;
 
     // Filter recipes based on search value
+    //  Add foreach loop in the if statement wich iterates over the filters' array 
+    // and push the recipes to the result array
     if (searchValue.length > 0 || noTag) {
-        result = [
-            ...recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
-            ...recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
-            ...recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
-            ...recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
-            ...recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")))
+        result = [];
+        const filters = [
+            (x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")),
+            x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")),
+            (x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")),
+            x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")),
+            (x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))
         ];
+    
+        filters.forEach(filter => {
+            result.push(...recipes.filter(filter));
+        });
     }
 
     // Filter recipes based on ingredients, appliance, and ustensils tags
+    // the first level of foreach loop iterates over the tags'ingredients, tags' appliance and tags'ustensils in a array
+    // the second level of foreach  is used to iterate over each element in the current tags array 
+    // within the second level of foreach loop, the result array is updated with the filtered result 
+    // I use also the spread operator to concatenate the result array with the filtered recipes from recipes'array
+    // Three conditions are used to filter (filter method ) the recipes wich is normalized and includes the searchValue 
     [tagsIngredients, tagsAppliances, tagsUstensils].forEach(tags => {
         tags.forEach(searchValue => {
             result = [
@@ -103,8 +115,8 @@ function displayRecipesCard(searchValue) {
 
 
 /*-------------------------main search bar-----------------*/
-// search by click event
 
+// search by click , keyup and change event
 function mainSearchBar() {
     document.getElementById('search').addEventListener('click', function () {
         // main search value which  used when user input a value in the search bar (keyword, recipe,etc...)
@@ -112,6 +124,7 @@ function mainSearchBar() {
         if (searchValue.length >= 3) {
             displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
         }
+        
         console.log("search : " + searchValue);
     });
 
@@ -161,7 +174,6 @@ function searchByAppliancesList() {
 }
 
 // search by ingredients' list
-
 function searchByIngredientsList() {
     // keyup event
     document.getElementById('search-drop_ing').addEventListener('keyup', function () {
@@ -181,17 +193,17 @@ function sortByIngredients() {
     // display list of ingredients in devtool
     // flatMap deletes nested arrays and returns an array
     resultIngredients = recipes.flatMap(x => x.ingredients.map(x => x.ingredient.toLowerCase().normalize("NFD"))).reduce(
-        // delete redundancies using reduce method which call a callback function and returns an array (prv, cur) 
+        // delete redundancies using reduce method which call a callback function and returns a flaterned array (prv, cur) 
         // prv as an accumulator (initial value) and cur as current value
         (prv, cur) => {
             // console.log(prv,cur);
-            let key = cur; // init key value
+            let key = cur; // init key cur value
 
-            if (!prv.key[key]) { // if key{} and key[] do not exist
-                prv.key[key] = true; // create key
-                prv.res.push(cur); // push (cur) to array (prv.res)
+            if (!prv.key[key]) { // if rev.key[key] is false means value has not been encountred
+                prv.key[key] = true; // if its true means value has been encountred
+                prv.res.push(cur); // push (cur) to the result array (prv.res)
             }
-            return prv; // return prv
+            return prv; // the call back return the modified  prv obj
         }, { key: {}, res: [] }).res.sort(); // select array (res) and sort
 
     const searchValueIngredients = document.getElementById('search-drop_ing').value;
@@ -207,6 +219,20 @@ function sortByIngredients() {
                     </a>
                 `
     ).join('');
+    
+    // Display an error message if no recipe found in drop ingredients' list
+    const searchDropIng = document.getElementById('search-drop_ing');
+    const errorFilter = document.getElementById('errorFilter');
+    const articles = document.getElementsByClassName('article');
+
+    if (resultIngredients.length === 0) {
+
+        errorFilter.style.display = searchDropIng.length > 0 ? "none" : "block";
+
+        for (let i = 0; i < articles.length; i++) {
+            articles[i].style.display = "none";
+        }
+    }
 };
 
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
@@ -214,7 +240,7 @@ document.getElementById('drop-ingredients_open').addEventListener('click', funct
 });
 
 
-// display ingredients' list
+
 
 // sort by appliance
 function sortByAppliance() {
@@ -245,13 +271,29 @@ function sortByAppliance() {
                     </a>
                 `
     ).join('');
+
+    // Display an error message if no recipe found in drop appliance 's list
+    // Grab dom 's elements first
+    const searchDropApp = document.getElementById('search-drop_app');
+    const errorFilter = document.getElementById('errorFilter');
+    const articles = document.getElementsByClassName('article');
+    
+    // Do the if statement to display the error message
+    // if resultApplaince's length is equal to 0
+    // display the error message and hide the articles
+    if (resultAppliance.length === 0) {
+        errorFilter.style.display = searchDropApp.length > 0 ? "none" : "block";
+
+        for (let i = 0; i < articles.length; i++) {
+            articles[i].style.display = "none";
+        }
+    }
 };
 
 // search by appliances' list
 
 document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
     // console.log(`clicked on : "${e.target.dataset.name}"`);
-    displayRecipesCard(e.target.dataset.name);
 })
 
 function searchByAppliancesList() {
@@ -298,9 +340,24 @@ function sortByUstensiles() {
                     </a>
                 `
     ).join('');
+
+    // Display an error message if no recipe found in drop ustensiles' list
+    const searchDropUst = document.getElementById('search-drop_ust');
+    const errorFilter = document.getElementById('errorFilter');
+    const articles = document.getElementsByClassName('article');
+    
+    // Do the if statement to display the error message
+    // if resultUstensiles's length is equal to 0
+    // display the error message and hide the articles
+    if (resultUstensiles.length === 0) {
+        errorFilter.style.display = searchDropUst.length > 0 ? "none" : "block";
+
+        for (let i = 0; i < articles.length; i++) {
+            articles[i].style.display = "none";
+        }
+    }
 };
 
 document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
     // console.log(`clicked on : "${e.target.dataset.name}"`);
-    displayRecipesCard(e.target.dataset.name);
-})
+});
