@@ -49,34 +49,25 @@ function displayRecipesCard(searchValue) {
 
     // Filter recipes based on search value
     if (searchValue.length > 0 || noTag) {
-        resultName = recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-        resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-        resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-        resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")));
-        resultDescription = recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")));
-
-        result = resultName.concat(resultAppliance).concat(resultIngredient).concat(resultUstensils).concat(resultDescription);
+        result = [
+            ...recipes.filter((x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
+            ...recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
+            ...recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
+            ...recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
+            ...recipes.filter((x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")))
+        ];
     }
 
-    // Filter recipes based on ingredients tags
-    tagsIngredients.forEach(element => {
-        resultIngredient = recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(element.toLowerCase().normalize("NFD")));
-        
-        result = result.concat(resultIngredient);
-    });
-
-    // Filter recipes based on appliance tags
-    tagsAppliances.forEach(element => {
-        resultAppliance = recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(element.toLowerCase().normalize("NFD")));
-        
-        result = result.concat(resultAppliance);
-    });
-
-    // Filter recipes based on ustensils tags
-    tagsUstensils.forEach(element => {
-        resultUstensils = recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(element.toLowerCase().normalize("NFD")));
-        
-        result = result.concat(resultUstensils);
+    // Filter recipes based on ingredients, appliance, and ustensils tags
+    [tagsIngredients, tagsAppliances, tagsUstensils].forEach(tags => {
+        tags.forEach(searchValue => {
+            result = [
+                ...result,
+                ...recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
+                ...recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
+                ...recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")))
+            ];
+        });
     });
 
     // Display recipes by names, appliance, ustensils
@@ -107,12 +98,9 @@ function displayRecipesCard(searchValue) {
     ).join('');
 
     // Display an error message if no recipes were found
-    if (document.getElementsByClassName('article').length > 0) {
-        document.getElementById('errorFilter').style.display = "none";
-    } else {
-        document.getElementById('errorFilter').style.display = "block";
-    }
+    document.getElementById('errorFilter').style.display = document.getElementsByClassName('article').length > 0 ? "none" : "block";
 }
+
 
 /*-------------------------main search bar-----------------*/
 // search by click event
@@ -223,7 +211,6 @@ function sortByIngredients() {
 
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
     // console.log(`clicked on : "${e.target.dataset.name}"`);
-    displayRecipesCard(e.target.dataset.name);
 });
 
 
@@ -317,4 +304,3 @@ document.getElementById('drop-ustensiles_open').addEventListener('click', functi
     // console.log(`clicked on : "${e.target.dataset.name}"`);
     displayRecipesCard(e.target.dataset.name);
 })
-
