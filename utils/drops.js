@@ -1,60 +1,47 @@
-/** Instanciation **/
-
-let dropIngrBtn = document.getElementById("ingredients-down");//intégration sur la fléche pour qu'il y est propagation de l'action pour l'ouerture
+// Enhance the arrow functionality to trigger and propagate an action when it is opened        
+let dropIngrBtn = document.getElementById("ingredients-down");
 let dropAppBtn = document.getElementById("appareil-down");
 let dropUstBtn = document.getElementById("ustensiles-down");
 
-
-let dropIngrBtnClos = document.getElementById("ingredients-up");//intégration sur la fléche pour qu'il y est propagation de l'action pour la fermeture
+// Enhance the arrow functionality to trigger and propagate an action when it is closed
+let dropIngrBtnClos = document.getElementById("ingredients-up");
 let dropAppBtnClos = document.getElementById("appareil-up");
 let dropUstBtnClos = document.getElementById("ustensiles-up");
 
+//----------------------------DROPDOWNS------------------------------
 
-let searchRecipes = document.querySelector(".search-recipes");
-let main = document.getElementById("recipes");
-
-//*************************************
-//DROPDOWNS
-//*************************************
-
-/** Ouverture des drops down **/
+// open drop down on click event
 dropIngrBtn.addEventListener("click", openDropIngr);
 dropAppBtn.addEventListener("click", openDropApp);
 dropUstBtn.addEventListener("click", openDropUst);
 
-/** Fermeture des drops down
- */
+// close drop down on click event
 dropIngrBtnClos.addEventListener("click", closeAll); 
 dropAppBtnClos.addEventListener("click", closeAll);
 dropUstBtnClos.addEventListener("click", closeAll);
 
-main.addEventListener("click", closeAll); 
-searchRecipes.addEventListener("click", closeAll); 
-
-
-/** Création des Function
- */
-
-//Function fermture de tous les drops down
+// close all drop down 
 function closeAll() {
   document.getElementById("drop-ing_open").style.display = "none";
   document.getElementById("drop-app_open").style.display = "none";
   document.getElementById("drop-ust_open").style.display = "none";
 }
 
-//Function ouverture  selon l'element selectione
+// open drop down depends on the selected ingredient
 function openDropIngr() {
   document.getElementById("drop-ing_open").style.display = "flex";
   document.getElementById("drop-app_open").style.display = "none";
   document.getElementById("drop-ust_open").style.display = "none";
 }
 
+// open drop down depends on the selected appliance
 function openDropApp() {
   document.getElementById("drop-app_open").style.display = "flex";
   document.getElementById("drop-ing_open").style.display = "none";
   document.getElementById("drop-ust_open").style.display = "none";
 }
 
+// open drop down depends on the selected ustensils
 function openDropUst() {
   document.getElementById("drop-ust_open").style.display = "flex";
   document.getElementById("drop-ing_open").style.display = "none";

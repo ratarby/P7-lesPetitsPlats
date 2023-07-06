@@ -70,7 +70,7 @@ function displayRecipesCard(searchValue) {
     // the second level of foreach  is used to iterate over each element in the current tags array 
     // within the second level of foreach loop, the result array is updated with the filtered result 
     // I use also the spread operator to concatenate the result array with the filtered recipes from recipes'array
-    // Three conditions are used to filter (filter method ) the recipes wich is normalized and includes the searchValue 
+    // Three conditions are used to filter (filter method ) the recipes wich are normalized (normalize method) and includes (includes method) the searchValue as a parameter
     [tagsIngredients, tagsAppliances, tagsUstensils].forEach(tags => {
         tags.forEach(searchValue => {
             result = [
@@ -113,7 +113,6 @@ function displayRecipesCard(searchValue) {
     document.getElementById('errorFilter').style.display = document.getElementsByClassName('article').length > 0 ? "none" : "block";
 }
 
-
 /*-------------------------main search bar-----------------*/
 
 // search by click , keyup and change event
@@ -130,16 +129,16 @@ function mainSearchBar() {
 
     // search by keyup event
     document.getElementById('search-all-recipes').addEventListener('keyup', function () {
-        const searchValue = document.getElementById("search-all-recipes").value; // valeur de la barre de recherche
+        const searchValue = document.getElementById("search-all-recipes").value; // value of the search bar
         if (searchValue.length >= 3) {
             displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
         }
 
         // search by change event
-        console.log("search : " + searchValue); // tableau de recettes vide que l'utilisateur rempliera la valeur de la barre de recherche
+        console.log("search : " + searchValue); 
     });
     document.getElementById('search-all-recipes').addEventListener('change', function () {
-        const searchValue = document.getElementById("search-all-recipes").value; // valeur de la barre de recherche
+        const searchValue = document.getElementById("search-all-recipes").value; // value of the search bar
         if (searchValue.length >= 3) {
             displayRecipesCard(searchValue.toLowerCase().normalize("NFD"));
         }
@@ -238,9 +237,6 @@ function sortByIngredients() {
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
     // console.log(`clicked on : "${e.target.dataset.name}"`);
 });
-
-
-
 
 // sort by appliance
 function sortByAppliance() {

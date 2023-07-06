@@ -7,17 +7,6 @@ improveSnippet();
 // Create improve snippet for best practice and readabilities
 function improveSnippet() {
 
-    joinArrays();
-    console.log(joinArrays());
-
-    // joinArrays() is the way to create tags array from stringifyed elements from tagsIngredients and tagsAppliances and tagsUstensils
-    function joinArrays() {
-        const flattenedArray = [...tags].flatMap(x => Array.isArray(x) ? x.join('') : x); // flatten tags'array and join stringify the array
-        const splitedArray = flattenedArray.flatMap(x => x.split(' ')); // split stringified array to substring array using ' ' as delimiter 
-        const splitedArray2 = [...new Set(splitedArray)]; // create unique array 
-        return splitedArray2.join(' '); // returns a string obtained by joining the elements of the splitedArray2 array using spaces as the delimiter.
-    }
-
     // handle ingredients tags
     function handleClickIngr(e) {
         // push tagsIngredients with each element (spreads oprator) to tags' array 
@@ -164,6 +153,7 @@ function improveSnippet() {
         // and append a unique value to the tags array.
         tags.push(...new Set([...tagType]));
         tagType.push(e.target.dataset.name);
+        closeAll();
 
         // ---------------------------------------------------------- div
         const newTag = document.createElement('div');
@@ -193,10 +183,13 @@ function improveSnippet() {
 
         displayRecipesCard(''); // call function displayRecipesCard
 
+        // click event listener to the removeIcon element, and when clicked, it removes
         removeIcon.addEventListener('click', function () {
+            //removes the element in the tags array that matches the value of e.target.dataset.name
             tagType.splice(tagType.indexOf(e.target.dataset.name), 1);
+            // remove the element in the tags array
             newTag.remove();
-            displayRecipesCard('');
+            displayRecipesCard(''); // call function displayRecipesCard('')
         });
 
         console.log(tagType);
@@ -205,16 +198,26 @@ function improveSnippet() {
     // The handleClickIngr function is a higher-level function that serves as a wrapper 
     // for the handleTagClick function. It takes an event e as a parameter and 
     // passes it along with the tagsIngredients argument to the handleTagClick function. 
-    // This function is likely used to handle a specific event related to
+    // This function is used to handle a specific event related to
     // ingredients, triggering handleTagClick.
     function handleClickIngr(e) {
         handleTagClick(e, tagsIngredients);
     }
-    // idem
+
+    // The handleClickAppl function is a higher-level function that serves as a wrapper
+    // for the handleTagClick function. It takes an event e as a parameter and
+    // passes it along with the tagsAppliances argument to the handleTagClick function.
+    // This function is used to handle a specific event related to
+    // appliances, triggering handleTagClick.
     function handleClickAppl(e) {
         handleTagClick(e, tagsAppliances);
     }
-    //idem
+    
+    // The handleClickUst function is a higher-level function that serves as a wrapper
+    // for the handleTagClick function. It takes an event e as a parameter and
+    // passes it along with the tagsUstensils argument to the handleTagClick function.
+    // This function is used to handle a specific event related to
+    // ustensils, triggering handleTagClick.
     function handleClickUst(e) {
         handleTagClick(e, tagsUstensils);
     }
