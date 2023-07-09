@@ -16,13 +16,13 @@ function improveSnippet() {
         // push e.target.dataset.name (link) to tagsIngredients' array 
         tags.push(...new Set([...tagsIngredients]));
         tagsIngredients.push(e.target.dataset.name);
-        
+
         // ---------------------------------------------------------- div 
-        const newTagIngr = document.createElement('div'); 
+        const newTagIngr = document.createElement('div');
         newTagIngr.setAttribute('class', 'tags tagIngr');
         newTagIngr.setAttribute('data-name', e.target.dataset.name);
-        newTagIngr.textContent += e.target.dataset.name; 
-
+        newTagIngr.textContent += e.target.dataset.name;
+        
         // -----------------------------------------------------------i
         const removeIcon = document.createElement('i');
         removeIcon.setAttribute('class', 'far fa-times-circle');
@@ -43,8 +43,7 @@ function improveSnippet() {
             // remove the element in the tags array
             newTagIngr.remove();
             // call the displayRecipesCard() function and passes the value of e.target.dataset.name as paremeter.
-            displayRecipesCard(e.target.dataset.name); 
-
+            displayRecipesCard(e.target.dataset.name);
         });
     }
 
@@ -53,6 +52,8 @@ function improveSnippet() {
     // triggering the handleClickIngr() function when clicked.
     function displayIngredientsTags() {
         document.getElementById('drop-ingredients_open').addEventListener('click', (e) => handleClickIngr(e));
+        console.log('Ingredients', tagsIngredients);
+
     }
 
     // handle appliances tags
@@ -75,15 +76,15 @@ function improveSnippet() {
         const removeIcon = document.createElement('i');
         removeIcon.setAttribute('class', 'far fa-times-circle');
         removeIcon.setAttribute('data-name', e.target.dataset.name);
+
         // ---------------------------------------------------------- div tags applance
         const tagsListAppl = document.getElementById('tags');
         newTagAppl.appendChild(removeIcon);
         tagsListAppl.appendChild(newTagAppl);
-        
+
         displayRecipesCard(''); // call function displayRecipesCard
 
-        // click event listener to the removeIcon element, and when clicked, it removes 
-        //the corresponding element from the tagsAppliances array, removes the associated DOM element, and updates the displayed recipes. 
+        // remove tagsApliances' element on click event
         removeIcon.addEventListener('click', function () {
             //removes the element in the tagsAppliances array that matches the value of e.target.dataset.name
             tagsAppliances.splice(tagsAppliances.indexOf(e.target.dataset.name), 1);
@@ -99,6 +100,7 @@ function improveSnippet() {
     // triggering the handleClickAppl() function when clicked.
     function displayAppliancesTags() {
         document.getElementById('drop-appareil_open').addEventListener('click', (e) => handleClickAppl(e));
+        console.log('Appliance', tagsAppliances);
     }
 
     // handle ustensils tags
@@ -143,57 +145,74 @@ function improveSnippet() {
     // triggering the handleClickUst() function when clicked.
     function displayUstensilesTags() {
         document.getElementById('drop-ustensiles_open').addEventListener('click', (e) => handleClickUst(e));
+        console.log("Ustensiles ", tagsUstensils);
     }
 
-    // handle tags witch used to display tags in one array with paremeters 'e' and 'tagType'
-    function handleTagClick(e, tagType) {
-        // push tagsType with each element (spreads oprator) to tags' array
-        // ...tagsType is wrapped in a "...new Set() constructor" . Its a built-in Js obj
-        // which ensure that  any duplicate values in the tags array are automatically removed
-        // and append a unique value to the tags array.
-        tags.push(...new Set([...tagType]));
-        tagType.push(e.target.dataset.name);
-        closeAll();
+    // Refactored version of the handleTagClick function
 
-        // ---------------------------------------------------------- div
+    function handleTagClick(e, tagType) {
+        // Add the elements from tagType to the tags array, ensuring uniqueness
+        tags.push(...new Set([...tagType]));
+
+        // Add the clicked tag to the tagType array
+        tagType.push(e.target.dataset.name);
+
+        // Close all other elements (not shown in code)
+
+        // Create a new div element to display the clicked tag
         const newTag = document.createElement('div');
         newTag.setAttribute('class', `tags tag ${tagType}`);
         newTag.setAttribute('data-name', e.target.dataset.name);
         newTag.textContent += e.target.dataset.name;
+        closeAll();
 
-        
-        // if statement to display the color of the tag
-        if (tagType === tagsIngredients) { // if tagType is equal to tagsIngredients
-            newTag.classList.add('tagIngr'); // add class tagIngr for blue color
-        } else if (tagType === tagsAppliances) { // if tagType is equal to tagsAppliances
-            newTag.classList.add('tagAppl'); // add class tagAppl for green color
-        } else if (tagType === tagsUstensils) { // if tagType is equal to tagsIngredients
-            newTag.classList.add('tagUst'); // add class tagUst for red color
+        // Set the appropriate color class based on the tagType
+        if (tagType === tagsIngredients) {
+            newTag.classList.add('tagIngr');
+        } else if (tagType === tagsAppliances) {
+            newTag.classList.add('tagAppl');
+        } else if (tagType === tagsUstensils) {
+            newTag.classList.add('tagUst');
         }
 
-        // ---------------------------------------------------------- i
+        // Create a remove icon element
         const removeIcon = document.createElement('i');
         removeIcon.setAttribute('class', 'far fa-times-circle');
         removeIcon.setAttribute('data-name', e.target.dataset.name);
-        
-        // ---------------------------------------------------------- div tags
+
+        // Get the tags container element
         const tagsList = document.getElementById('tags');
+
+        // Add the remove icon to the new tag element
         newTag.appendChild(removeIcon);
+        function removeTag(tagType, tagName, tagElement) {
+            tagType.splice(tagType.indexOf(tagName), 1);
+            tagElement.remove();
+            displayRecipesCard(tagName);
+        }
+
+        // Prepend the new tag to the tags container
         tagsList.prepend(newTag);
 
-        displayRecipesCard(''); // call function displayRecipesCard
+        // Call the displayRecipesCard function
+        displayRecipesCard('');
 
-        // click event listener to the removeIcon element, and when clicked, it removes
+        // Add a click event listener to the removeIcon element
         removeIcon.addEventListener('click', function () {
-            //removes the element in the tags array that matches the value of e.target.dataset.name
+
+            // Remove the clicked tag from the tagType array
             tagType.splice(tagType.indexOf(e.target.dataset.name), 1);
-            // remove the element in the tags array
+
+            // Remove the new tag element from the DOM
             newTag.remove();
-            displayRecipesCard(''); // call function displayRecipesCard('')
+
+            // Call the displayRecipesCard function
+            displayRecipesCard('');
         });
 
-        console.log(tagType);
+        console.log('tags', tagType);
     }
+
 
     // The handleClickIngr function is a higher-level function that serves as a wrapper 
     // for the handleTagClick function. It takes an event e as a parameter and 
@@ -212,7 +231,7 @@ function improveSnippet() {
     function handleClickAppl(e) {
         handleTagClick(e, tagsAppliances);
     }
-    
+
     // The handleClickUst function is a higher-level function that serves as a wrapper
     // for the handleTagClick function. It takes an event e as a parameter and
     // passes it along with the tagsUstensils argument to the handleTagClick function.
@@ -225,4 +244,6 @@ function improveSnippet() {
     displayIngredientsTags(); // call function displayIngredientsTags
     displayAppliancesTags(); // call function displayAppliancesTags
     displayUstensilesTags(); // call function displayUstensilesTags
+
+    
 }

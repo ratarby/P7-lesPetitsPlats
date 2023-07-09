@@ -186,7 +186,7 @@ function searchByIngredientsList() {
 }
 
 // sort by ingredients
-function sortByIngredients() {
+function sortByIngredients(e) {
     let resultIngredients;
 
     // display list of ingredients in devtool
@@ -209,8 +209,10 @@ function sortByIngredients() {
     if (searchValueIngredients.length >= 3) {
         resultIngredients = resultIngredients.filter((x) => x.toLowerCase().normalize("NFD").includes(searchValueIngredients.toLowerCase().normalize("NFD")));
     }
-    // display list of ingredients on screen
-    // console.log(resultIngredients);
+
+
+
+
     document.getElementById('drop-ingredients_open').innerHTML = resultIngredients.map(
         (x) => `
                     <a href="#" class="linkIngr" id="${x}" data-name="${x}">
@@ -218,6 +220,9 @@ function sortByIngredients() {
                     </a>
                 `
     ).join('');
+
+    // display list of ingredients on screen
+    // console.log(resultIngredients);
     
     // Display an error message if no recipe found in drop ingredients' list
     const searchDropIng = document.getElementById('search-drop_ing');
@@ -225,7 +230,7 @@ function sortByIngredients() {
     const articles = document.getElementsByClassName('article');
 
     if (resultIngredients.length === 0) {
-
+        // ternary operator to display the error message
         errorFilter.style.display = searchDropIng.length > 0 ? "none" : "block";
 
         for (let i = 0; i < articles.length; i++) {
@@ -235,7 +240,7 @@ function sortByIngredients() {
 };
 
 document.getElementById('drop-ingredients_open').addEventListener('click', function (e) {
-    // console.log(`clicked on : "${e.target.dataset.name}"`);
+    console.log(`clicked on ingredient : "${e.target.dataset.name}"`);
 });
 
 // sort by appliance
@@ -279,7 +284,7 @@ function sortByAppliance() {
     // display the error message and hide the articles
     if (resultAppliance.length === 0) {
         errorFilter.style.display = searchDropApp.length > 0 ? "none" : "block";
-
+        
         for (let i = 0; i < articles.length; i++) {
             articles[i].style.display = "none";
         }
@@ -289,7 +294,7 @@ function sortByAppliance() {
 // search by appliances' list
 
 document.getElementById('drop-appareil_open').addEventListener('click', function (e) {
-    // console.log(`clicked on : "${e.target.dataset.name}"`);
+    console.log(`clicked on appliance : "${e.target.dataset.name}"`);
 })
 
 function searchByAppliancesList() {
@@ -355,5 +360,5 @@ function sortByUstensiles() {
 };
 
 document.getElementById('drop-ustensiles_open').addEventListener('click', function (e) {
-    // console.log(`clicked on : "${e.target.dataset.name}"`);
+    console.log(`clicked on ustensil : "${e.target.dataset.name}"`);
 });
