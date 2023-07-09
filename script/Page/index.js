@@ -41,17 +41,15 @@ searchByUstensilsList(); // ok
  * @param {string} searchValue - The search value to filter recipes.
  */
 function displayRecipesCard(searchValue) {
-    // Filter the recipes based on the search value and tags
+    // Initialize an empty array to store the filtered recipes
     let result = [];
 
     // Check if there are no tags selected
     const noTag = tagsIngredients.length === 0 && tagsAppliances.length === 0 && tagsUstensils.length === 0;
 
-    // Filter recipes based on search value
-    //  Add foreach loop in the if statement wich iterates over the filters' array 
-    // and push the recipes to the result array
+    // Filter recipes based on search value and tags
     if (searchValue.length > 0 || noTag) {
-        result = [];
+        // Array of filters to apply
         const filters = [
             (x) => x.name.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")),
             x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD")),
@@ -59,30 +57,26 @@ function displayRecipesCard(searchValue) {
             x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")),
             (x) => x.description.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))
         ];
-    
-        filters.forEach(filter => {
+
+        // Apply each filter to the recipes and add the filtered recipes to the result array
+        for (const filter of filters) {
             result.push(...recipes.filter(filter));
-        });
+        }
     }
 
     // Filter recipes based on ingredients, appliance, and ustensils tags
-    // the first level of foreach loop iterates over the tags'ingredients, tags' appliance and tags'ustensils in a array
-    // the second level of foreach  is used to iterate over each element in the current tags array 
-    // within the second level of foreach loop, the result array is updated with the filtered result 
-    // I use also the spread operator to concatenate the result array with the filtered recipes from recipes'array
-    // Three conditions are used to filter (filter method ) the recipes wich are normalized (normalize method) and includes (includes method) the searchValue as a parameter
-    [tagsIngredients, tagsAppliances, tagsUstensils].forEach(tags => {
-        tags.forEach(searchValue => {
+    for (const tags of [tagsIngredients, tagsAppliances, tagsUstensils]) {
+        for (const tag of tags) {
             result = [
                 ...result,
-                ...recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD"))),
-                ...recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(searchValue.toLowerCase().normalize("NFD"))),
-                ...recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(searchValue.toLowerCase().normalize("NFD")))
+                ...recipes.filter((x) => x.ingredients.map(y => y.ingredient.toLowerCase().normalize("NFD")).includes(tag.toLowerCase().normalize("NFD"))),
+                ...recipes.filter(x => x.appliance.toLowerCase().normalize("NFD").includes(tag.toLowerCase().normalize("NFD"))),
+                ...recipes.filter(x => x.ustensils.map(y => y.toLowerCase().normalize("NFD")).includes(tag.toLowerCase().normalize("NFD")))
             ];
-        });
-    });
+        }
+    }
 
-    // Display recipes by names, appliance, ustensils
+    // Display the filtered recipes as HTML cards
     document.getElementById('recipes').innerHTML = result.map(
         (x) => `
         <article class="article" id="${x.id}" tabindex="0">
@@ -92,7 +86,7 @@ function displayRecipesCard(searchValue) {
                     <div class="title-txt">${x.name}</div>
                     <div class="title-time"><i class="far fa-clock"></i> ${x.time}</div>
                 </div>
-                    
+
                 <div class="details">
                     <div class="details-ingr">
                         ${x.ingredients.map((y) => `

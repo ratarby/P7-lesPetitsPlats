@@ -1,4 +1,4 @@
-# P7-lesPetitsPlats
+# P7-lesPetitsPlats-V2
 
 ---
 
